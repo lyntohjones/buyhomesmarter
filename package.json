@@ -1,0 +1,17 @@
+{
+  "name": "buyhomesmarter",
+  "version": "1.0.0",
+  "description": "BuyHomeSmarter.com — High-conversion landing page for buyer-advocacy home buying platform",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "dev": "npx serve . -p 3000",
+    "build": "echo 'Static site — no build step needed'"
+  },
+  "keywords": ["real-estate", "home-buying", "buyer-advocacy", "canada", "usa", "mortgage"],
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "serve": "^14.2.3"
+  }
+}
