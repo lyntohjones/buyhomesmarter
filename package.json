@@ -1,16 +1,33 @@
 {
   "name": "buyhomesmarter",
   "version": "1.0.0",
-  "description": "BuyHomeSmarter.com — High-conversion landing page for buyer-advocacy home buying platform",
-  "main": "index.html",
-  "scripts": {
-    "start": "npx serve . -p 3000",
-    "dev": "npx serve . -p 3000",
-    "build": "echo 'Static site — no build step needed'"
+  "description": "BuyHomeSmarter.com — The buyer-first home purchasing platform for Canada and USA. Uncover hidden fees, unlock $100K+ in grants, negotiate like an insider.",
+  "homepage": "https://buyhomesmarter.com",
+  "author": {
+    "name": "BuyHomeSmarter",
+    "url": "https://buyhomesmarter.com"
   },
-  "keywords": ["real-estate", "home-buying", "buyer-advocacy", "canada", "usa", "mortgage"],
   "license": "UNLICENSED",
   "private": true,
+  "scripts": {
+    "start": "npx serve . -p 3000",
+    "dev": "npx serve . -p 3000 --cors",
+    "lint": "npx htmlhint index.html",
+    "preview": "npx serve . -l 5000"
+  },
+  "keywords": [
+    "home buying",
+    "mortgage",
+    "real estate",
+    "first time home buyer",
+    "canada",
+    "usa",
+    "grants",
+    "adsense"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "devDependencies": {
     "serve": "^14.2.3"
   }

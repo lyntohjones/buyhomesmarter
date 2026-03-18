@@ -1,6 +1,15 @@
 User-agent: *
 Allow: /
-Disallow: /admin/
 
+# Block any accidental admin or config paths
+Disallow: /node_modules/
+Disallow: /.git/
+Disallow: /.env
+Disallow: /vercel.json
+Disallow: /package.json
+
+# Sitemap location
 Sitemap: https://buyhomesmarter.com/sitemap.xml
+
+# Crawl delay (optional — be kind to bots)
 Crawl-delay: 1

@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuyHomeSmarter — The Home Buying Platform That Fights For You</title>
+  <meta name="description" content="Discover hidden fees, unlock $100,000+ in government grants, negotiate like a pro, and buy smarter. Canada and USA home buying tools built 100% for buyers — not agents.">
+  <meta name="keywords" content="first time home buyer, mortgage calculator, home buying grants Canada, FHA loan, FHSA account, CMHC, home negotiation tips, buy home smarter, outsmart realtor">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="BuyHomeSmarter — Save $23,000+ On Your Home Purchase">
+  <meta property="og:description" content="The only platform built 100% for buyers. Hidden fees exposed, government grants unlocked, negotiation playbook revealed.">
+  <meta property="og:url" content="https://buyhomesmarter.com">
+  <meta property="og:type" content="website">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="BuyHomeSmarter — The Home Buying Platform That Fights For You">
+  <meta name="twitter:description" content="Uncover hidden fees. Unlock government grants. Outsmart the system.">
+  
+  <link rel="canonical" href="https://buyhomesmarter.com">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- ================================================
+    GOOGLE ADSENSE — Replace ca-pub-XXXXXXXXXXXXXXXXX
+    with your actual Publisher ID from AdSense dashboard
+    https://adsense.google.com
+  ================================================= -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+</head>
+<body>
+
+  <!-- ===== NAVIGATION ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <div class="nav-logo-icon">🏠</div>
+        <div class="nav-logo-text">
+          <span class="logo-main">BuyHomeSmart<span class="logo-er">er</span></span>
+          <span class="logo-sub">The Buyer's Platform</span>
+        </div>
+      </a>
+      
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#features" class="nav-link">Features</a></li>
+        <li><a href="#programs" class="nav-link">Free Money</a></li>
+        <li><a href="#negotiate" class="nav-link">Negotiate</a></li>
+        <li><a href="#secrets" class="nav-link">Secrets</a></li>
+        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li class="nav-country-toggle">
+          <button class="country-btn active" id="btnCA" onclick="setCountry('CA')">🇨🇦 CA</button>
+          <button class="country-btn" id="btnUS" onclick="setCountry('US')">🇺🇸 US</button>
+        </li>
+      </ul>
+      
+      <a href="#platform" class="btn-nav-cta">Start Free →</a>
+      
+      <button class="hamburger" id="hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile menu overlay -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#features" onclick="closeMobile()">Features</a></li>
+      <li><a href="#programs" onclick="closeMobile()">Free Money</a></li>
+      <li><a href="#negotiate" onclick="closeMobile()">Negotiate</a></li>
+      <li><a href="#secrets" onclick="closeMobile()">Secrets</a></li>
+      <li><a href="#how-it-works" onclick="closeMobile()">How It Works</a></li>
+      <li class="mobile-country">
+        <button class="country-btn active" onclick="setCountry('CA');closeMobile()">🇨🇦 Canada</button>
+        <button class="country-btn" onclick="setCountry('US');closeMobile()">🇺🇸 USA</button>
+      </li>
+      <li><a href="#platform" class="btn-mobile-cta" onclick="closeMobile()">Start Free →</a></li>
+    </ul>
+  </div>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    
+    <div class="hero-container">
+      <div class="hero-content">
+        <div class="hero-badge animate-fade-up">
+          <span class="badge-dot"></span>
+          <span>Now covering Canada 🇨🇦 and USA 🇺🇸 — 100% Free</span>
+        </div>
+        
+        <h1 class="hero-headline animate-fade-up delay-1">
+          <span class="typewriter-text" id="typewriterText"></span><span class="typewriter-cursor">|</span>
+        </h1>
+        
+        <p class="hero-sub animate-fade-up delay-2">
+          The only home buying platform built <strong>100% for buyers</strong>. Uncover hidden fees, unlock $100,000+ in grants, and negotiate like an insider — with tools your agent <em>never</em> wanted you to have.
+        </p>
+        
+        <div class="hero-ctas animate-fade-up delay-3">
+          <a href="#platform" class="btn-primary btn-large">
+            <span>Analyze My Budget Free</span>
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="#secrets" class="btn-secondary btn-large">
+            <span>🔐 See All 10 Insider Secrets</span>
+          </a>
+        </div>
+        
+        <div class="hero-stats animate-fade-up delay-4">
+          <div class="hero-stat">
+            <div class="stat-icon">💰</div>
+            <div class="stat-value" data-target="100000" data-prefix="$" data-suffix="K+">$0</div>
+            <div class="stat-label">In government grants most buyers never claim</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="hero-stat">
+            <div class="stat-icon">🚨</div>
+            <div class="stat-value" data-target="17" data-suffix=" Fees">0</div>
+            <div class="stat-label">Banks hope you never find out about</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="hero-stat">
+            <div class="stat-icon">📊</div>
+            <div class="stat-value" data-target="23000" data-prefix="$" data-suffix="+">$0</div>
+            <div class="stat-label">Average savings our tools unlock</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="hero-visual animate-fade-right delay-2">
+        <div class="hero-card-stack">
+          <div class="hcard hcard-back">
+            <div class="hcard-header">
+              <span class="hcard-icon">🏦</span>
+              <span>Bank Pre-Approval</span>
+            </div>
+            <div class="hcard-amount red">$720,000</div>
+            <div class="hcard-label">What they want you to spend</div>
+            <div class="hcard-bar red-bar" style="width: 95%"></div>
+          </div>
+          <div class="hcard hcard-front">
+            <div class="hcard-header">
+              <span class="hcard-icon">✅</span>
+              <span>Smart Budget (25% Rule)</span>
+            </div>
+            <div class="hcard-amount gold">$415,000</div>
+            <div class="hcard-label">What you should actually spend</div>
+            <div class="hcard-bar gold-bar" style="width: 55%"></div>
+            <div class="hcard-savings">You save: <strong>$305,000 in debt</strong></div>
+          </div>
+          <div class="hcard hcard-float">
+            <div class="hcard-mini">
+              <span>🎁</span>
+              <div>
+                <div class="mini-title">FHSA + HBP Available</div>
+                <div class="mini-value">$100,000 tax-free</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-scroll-hint">
+      <span>Scroll to discover</span>
+      <div class="scroll-arrow">↓</div>
+    </div>
+  </section>
+
+  <!-- ===== TRUST BAR ===== -->
+  <div class="trust-bar">
+    <div class="trust-container">
+      <span class="trust-label">Verified information from:</span>
+      <div class="trust-logos">
+        <span class="trust-item">🏛️ CMHC</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-item">🏛️ HUD.gov</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-item">🏛️ CFPB</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-item">📊 Ratehub</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-item">🏦 Fannie Mae</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-item">🎖️ VA.gov</span>
+        <span class="trust-sep">•</span>
+        <span class="trust-item">🌾 USDA</span>
+      </div>
+      <span class="trust-countries">🇨🇦 Canada + 🇺🇸 USA</span>
+    </div>
+  </div>
+
+  <!-- ===== AD SLOT 1: LEADERBOARD — Below Trust Bar ===== -->
+  <!-- Best placement: high visibility, above the fold on most screens -->
+  <div class="ad-slot ad-leaderboard" id="ad-slot-1" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <!-- Leaderboard 728x90 / Responsive -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ===== PROBLEM SECTION ===== -->
+  <section class="problem-section section-reveal" id="problem">
+    <div class="container">
+      <div class="section-tag">⚠️ THE TRUTH</div>
+      <h2 class="section-headline">Here's What They're <span class="text-gold">Not</span> Telling You</h2>
+      <p class="section-sub">Three parties involved in every home purchase. Three parties working against your best interests.</p>
+      
+      <div class="problem-grid">
+        <div class="problem-card animate-card">
+          <div class="problem-card-icon red-icon">🏦</div>
+          <h3>Your Bank</h3>
+          <div class="problem-badge danger">CONFLICT OF INTEREST</div>
+          <p>Pre-approves you for <strong>43% DTI</strong> — the maximum they'll risk. Not the maximum <em>you</em> should spend. The difference on a $120K income?</p>
+          <div class="problem-callout">
+            <div class="callout-row">
+              <span>Bank approval:</span>
+              <span class="bad-value">$720,000</span>
+            </div>
+            <div class="callout-row">
+              <span>Smart budget (25%):</span>
+              <span class="good-value">$415,000</span>
+            </div>
+            <div class="callout-row bold-row">
+              <span>Extra debt pressure:</span>
+              <span class="danger-value">$305,000</span>
+            </div>
+          </div>
+          <p class="problem-footer">The bank earns <strong>$380,000 more in interest</strong> when you max out. Their approval is a business decision — not financial advice.</p>
+        </div>
+        
+        <div class="problem-card animate-card delay-1">
+          <div class="problem-card-icon yellow-icon">🤝</div>
+          <h3>Your Agent</h3>
+          <div class="problem-badge warning">MISALIGNED INCENTIVES</div>
+          <p>Earns <strong>MORE money</strong> when you pay MORE. Their incentive to negotiate hard for you? Mathematically tiny.</p>
+          <div class="problem-callout">
+            <div class="callout-row">
+              <span>$500K deal commission:</span>
+              <span class="bad-value">$12,500</span>
+            </div>
+            <div class="callout-row">
+              <span>$485K deal commission:</span>
+              <span class="good-value">$12,125</span>
+            </div>
+            <div class="callout-row bold-row">
+              <span>They lose by negotiating:</span>
+              <span class="warning-value">$375</span>
+            </div>
+          </div>
+          <p class="problem-footer">They lose <strong>$375</strong> to save you <strong>$15,000</strong>. You care 40× more about price than they do.</p>
+        </div>
+        
+        <div class="problem-card animate-card delay-2">
+          <div class="problem-card-icon blue-icon">📋</div>
+          <h3>Closing Day</h3>
+          <div class="problem-badge info">HIDDEN JUNK FEES</div>
+          <p><strong>17 fees</strong> appear on your closing disclosure. Many are junk fees the CFPB has flagged as potentially <em>illegal</em>. Most buyers pay every single one without question.</p>
+          <div class="problem-callout">
+            <div class="callout-row">
+              <span>Legitimate fees:</span>
+              <span class="good-value">8 fees</span>
+            </div>
+            <div class="callout-row">
+              <span>Negotiable fees:</span>
+              <span class="warning-value">6 fees</span>
+            </div>
+            <div class="callout-row bold-row">
+              <span>Likely junk fees:</span>
+              <span class="danger-value">3 fees</span>
+            </div>
+          </div>
+          <p class="problem-footer">Knowing which fees to fight saves the average buyer <strong>$2,000-$5,000</strong> at the closing table.</p>
+        </div>
+      </div>
+      
+      <div class="problem-resolution">
+        <div class="resolution-line"></div>
+        <p class="resolution-text"><span class="text-gold bold-text">BuyHomeSmarter</span> was built to change all of this.</p>
+        <div class="resolution-line"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AD SLOT 2: IN-CONTENT — After Problem Section ===== -->
+  <!-- Best placement: mid-content, high reader engagement zone -->
+  <div class="ad-slot ad-in-content" id="ad-slot-2" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <!-- In-Article / In-Feed Ad -->
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ===== FEATURES SECTION ===== -->
+  <section class="features-section section-reveal" id="features">
+    <div class="container">
+      <div class="section-tag">🛡️ YOUR ARSENAL</div>
+      <h2 class="section-headline">Everything You Need.<br><span class="text-gold">Nothing They Want You To Have.</span></h2>
+      <p class="section-sub">Six powerful tools — completely free — that put you on equal footing with industry insiders.</p>
+      
+      <div class="features-grid">
+        <div class="feature-card animate-card" data-feature="budget">
+          <div class="feature-icon-wrap">
+            <span class="feature-icon">🧮</span>
+          </div>
+          <h3>Smart Budget Analyzer</h3>
+          <p>Calculate what you can <strong>ACTUALLY afford</strong> using the 25% rule — not the bank's 43%. Includes closing costs, CMHC insurance, and emergency fund calculations.</p>
+          <div class="feature-tags">
+            <span class="tag">Real-time calc</span>
+            <span class="tag">Affordability score</span>
+          </div>
+          <a href="#platform" class="feature-link">Use tool →</a>
+        </div>
+        
+        <div class="feature-card animate-card delay-1" data-feature="secrets">
+          <div class="feature-icon-wrap">
+            <span class="feature-icon">🔐</span>
+          </div>
+          <div class="feature-badge">Most Popular</div>
+          <h3>Insider Secrets Vault</h3>
+          <p><strong>10 secrets</strong> your agent and bank don't want you reading. From dual agency traps to the NACA program — the things that cost them money when you know them.</p>
+          <div class="feature-tags">
+            <span class="tag">Dual agency trap</span>
+            <span class="tag">NACA program</span>
+          </div>
+          <a href="#secrets" class="feature-link">Unlock secrets →</a>
+        </div>
+        
+        <div class="feature-card animate-card delay-2" data-feature="grants">
+          <div class="feature-icon-wrap">
+            <span class="feature-icon">🎁</span>
+          </div>
+          <h3>$100K+ Grant Finder</h3>
+          <p>Every government program in <strong>Canada and USA</strong>. FHSA, HBP, DPA programs, FHA, NACA, Good Neighbor Next Door — all in one searchable database.</p>
+          <div class="feature-tags">
+            <span class="tag">17 programs</span>
+            <span class="tag">CA + USA</span>
+          </div>
+          <a href="#programs" class="feature-link">Find grants →</a>
+        </div>
+        
+        <div class="feature-card animate-card delay-1" data-feature="fees">
+          <div class="feature-icon-wrap">
+            <span class="feature-icon">🔍</span>
+          </div>
+          <h3>Hidden Fees Detector</h3>
+          <p>17-fee database. Know which ones are junk, which are negotiable, and <strong>exactly how to fight them</strong> at the closing table with word-for-word scripts.</p>
+          <div class="feature-tags">
+            <span class="tag">Fight scripts</span>
+            <span class="tag">CFPB data</span>
+          </div>
+          <a href="#platform" class="feature-link">Expose fees →</a>
+        </div>
+        
+        <div class="feature-card animate-card delay-2" data-feature="negotiate">
+          <div class="feature-icon-wrap">
+            <span class="feature-icon">🥊</span>
+          </div>
+          <h3>Negotiation Playbook</h3>
+          <p><strong>4-phase battle plan</strong> used by the top 1% of buyers. Phase-by-phase tactics that can save $15,000-$50,000 off any deal — that agents will never teach you.</p>
+          <div class="feature-tags">
+            <span class="tag">4 phases</span>
+            <span class="tag">21 tactics</span>
+          </div>
+          <a href="#negotiate" class="feature-link">Get playbook →</a>
+        </div>
+        
+        <div class="feature-card animate-card delay-3" data-feature="credit">
+          <div class="feature-icon-wrap">
+            <span class="feature-icon">📈</span>
+          </div>
+          <h3>Credit Booster Roadmap</h3>
+          <p>Personalized <strong>30/60/90-day credit plan</strong> by score range. See exactly how much each 10-point boost saves on your mortgage rate — in real dollars.</p>
+          <div class="feature-tags">
+            <span class="tag">Saves up to $180K</span>
+            <span class="tag">Personalized plan</span>
+          </div>
+          <a href="#platform" class="feature-link">Boost credit →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AD SLOT 3: RECTANGLE — After Features, Before Stats ===== -->
+  <!-- Best placement: between content sections — strong CPM zone -->
+  <div class="ad-slot ad-rectangle" id="ad-slot-3" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <!-- Medium Rectangle 300x250 or Responsive -->
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ===== STATS IMPACT SECTION ===== -->
+  <section class="impact-section section-reveal">
+    <div class="container">
+      <div class="impact-quote">
+        <div class="quote-marks">"</div>
+        <p>The average home buyer pays <span class="text-gold bold-text">$23,000 more than necessary</span> because they don't know what we're about to show them.</p>
+        <div class="quote-marks close-quote">"</div>
+      </div>
+      
+      <div class="impact-stats">
+        <div class="impact-stat section-reveal">
+          <div class="impact-num" data-target="2624" data-suffix="">2,624</div>
+          <div class="impact-label">DPA Programs Available Nationwide</div>
+        </div>
+        <div class="impact-stat section-reveal">
+          <div class="impact-num" data-target="40000" data-prefix="$" data-suffix="">$40K</div>
+          <div class="impact-label">FHSA Lifetime Contribution Limit</div>
+        </div>
+        <div class="impact-stat section-reveal">
+          <div class="impact-num" data-target="60000" data-prefix="$" data-suffix="">$60K</div>
+          <div class="impact-label">RRSP Tax-Free Withdrawal (HBP)</div>
+        </div>
+        <div class="impact-stat section-reveal">
+          <div class="impact-num" data-target="50" data-suffix="%">50%</div>
+          <div class="impact-label">Discount on HUD Homes (Good Neighbor)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <section class="how-section section-reveal" id="how-it-works">
+    <div class="container">
+      <div class="section-tag">⚡ SIMPLE PROCESS</div>
+      <h2 class="section-headline">From <span class="text-gold">Confused</span> to <span class="text-gold">Confident</span> in 3 Steps</h2>
+      
+      <div class="how-steps">
+        <div class="how-step animate-card">
+          <div class="step-number">01</div>
+          <div class="step-icon">📊</div>
+          <h3>Enter Your Info</h3>
+          <p>Input your income, savings, credit score, and target location. Takes under 3 minutes.</p>
+          <ul class="step-list">
+            <li>Annual income</li>
+            <li>Current savings</li>
+            <li>Credit score range</li>
+            <li>Canada or USA location</li>
+          </ul>
+        </div>
+        
+        <div class="how-connector">
+          <div class="connector-line"></div>
+          <div class="connector-arrow">→</div>
+        </div>
+        
+        <div class="how-step animate-card delay-1">
+          <div class="step-number">02</div>
+          <div class="step-icon">🎯</div>
+          <h3>Get Your Personalized Plan</h3>
+          <p>Instantly receive your custom analysis — no sign-up, no email required, no sales calls.</p>
+          <ul class="step-list">
+            <li>Programs you qualify for</li>
+            <li>Your real budget ceiling</li>
+            <li>Credit improvement roadmap</li>
+            <li>Hidden fees to fight</li>
+          </ul>
+        </div>
+        
+        <div class="how-connector">
+          <div class="connector-line"></div>
+          <div class="connector-arrow">→</div>
+        </div>
+        
+        <div class="how-step animate-card delay-2">
+          <div class="step-number">03</div>
+          <div class="step-icon">🏆</div>
+          <h3>Buy Smart. Save Big.</h3>
+          <p>Walk into every conversation with insider knowledge, negotiation tactics, and maximum leverage.</p>
+          <ul class="step-list">
+            <li>Negotiate from strength</li>
+            <li>Claim all free money</li>
+            <li>Expose and fight junk fees</li>
+            <li>Close confidently</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="how-cta">
+        <a href="#platform" class="btn-primary btn-large">Get My Free Analysis →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AD SLOT 4: IN-CONTENT — After How It Works ===== -->
+  <!-- Best placement: readers are engaged, ready to take action -->
+  <div class="ad-slot ad-in-content" id="ad-slot-4" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ===== PROGRAMS SECTION ===== -->
+  <section class="programs-section section-reveal" id="programs">
+    <div class="container">
+      <div class="section-tag">🎁 FREE MONEY</div>
+      <h2 class="section-headline">You're Leaving <span class="text-gold">Free Money</span> On The Table</h2>
+      <p class="section-sub">These programs exist specifically to help buyers like you. Most people never know they qualify.</p>
+      
+      <div class="programs-tabs">
+        <button class="prog-tab active" id="tabCA" onclick="switchTab('CA')">🇨🇦 Canada Programs</button>
+        <button class="prog-tab" id="tabUS" onclick="switchTab('US')">🇺🇸 USA Programs</button>
+      </div>
+      
+      <!-- Canada Programs -->
+      <div class="programs-grid" id="programsCA">
+        <div class="prog-card animate-card">
+          <div class="prog-icon">💼</div>
+          <div class="prog-badge gold-badge">🏆 BEST VALUE</div>
+          <h4>First Home Savings Account (FHSA)</h4>
+          <div class="prog-amount">$40,000 <span>per person</span></div>
+          <div class="prog-couple">$80,000 per couple</div>
+          <p>Tax-deductible contributions + tax-free withdrawals. Opens in 10 minutes at any bank.</p>
+          <div class="prog-tip">💡 Open TODAY even if you're years away. Contribution room accumulates from account opening date.</div>
+        </div>
+        
+        <div class="prog-card animate-card delay-1">
+          <div class="prog-icon">🏦</div>
+          <div class="prog-badge blue-badge">💰 UP TO $60K</div>
+          <h4>RRSP Home Buyers' Plan (HBP)</h4>
+          <div class="prog-amount">$60,000 <span>per person</span></div>
+          <div class="prog-couple">$120,000 per couple</div>
+          <p>Tax-free RRSP withdrawal for down payment. Repay over 15 years.</p>
+          <div class="prog-tip">💡 FHSA + HBP combined = $100K per person, $200K per couple in tax-advantaged funds.</div>
+        </div>
+        
+        <div class="prog-card animate-card delay-2">
+          <div class="prog-icon">🏛️</div>
+          <div class="prog-badge green-badge">💳 UP TO $8,475</div>
+          <h4>Land Transfer Tax Rebates</h4>
+          <div class="prog-amount">$4,000–$8,475</div>
+          <div class="prog-couple">Depends on province</div>
+          <p>Ontario: $4K. Toronto extra: $4,475. BC: $8K. PEI: $2K. Applied at closing automatically.</p>
+          <div class="prog-tip">💡 In Toronto, combined provincial + municipal rebate = $8,475. Tell your lawyer you're a first-time buyer.</div>
+        </div>
+        
+        <div class="prog-card animate-card delay-3">
+          <div class="prog-icon">🏗️</div>
+          <div class="prog-badge orange-badge">🏗️ UP TO $50,000</div>
+          <h4>GST Exemption (New Builds)</h4>
+          <div class="prog-amount">$50,000</div>
+          <div class="prog-couple">On homes under $1M</div>
+          <p>2025 federal proposal eliminates 5% GST on new construction for first-time buyers.</p>
+          <div class="prog-tip">💡 Ask your builder explicitly. They may not volunteer this information.</div>
+        </div>
+      </div>
+      
+      <!-- USA Programs -->
+      <div class="programs-grid hidden" id="programsUS">
+        <div class="prog-card animate-card">
+          <div class="prog-icon">⭐</div>
+          <div class="prog-badge gold-badge">🌟 $0 DOWN + $0 CLOSING</div>
+          <h4>NACA Program</h4>
+          <div class="prog-amount">$0 Down</div>
+          <div class="prog-couple">$0 closing costs + no PMI</div>
+          <p>No down payment, no closing costs, no PMI, no minimum credit score, below-market rates.</p>
+          <div class="prog-tip">💡 The #1 best-kept secret in home buying. Banks don't promote it because it eliminates their fees.</div>
+        </div>
+        
+        <div class="prog-card animate-card delay-1">
+          <div class="prog-icon">🎖️</div>
+          <div class="prog-badge green-badge">🎖️ 0% DOWN</div>
+          <h4>VA Loan (Veterans)</h4>
+          <div class="prog-amount">0% Down</div>
+          <div class="prog-couple">No PMI — ever</div>
+          <p>For veterans, active duty, and surviving spouses. Zero down, no PMI, competitive rates.</p>
+          <div class="prog-tip">💡 If you have ANY service-connected disability rating, the VA funding fee is WAIVED. Check before closing.</div>
+        </div>
+        
+        <div class="prog-card animate-card delay-2">
+          <div class="prog-icon">🌾</div>
+          <div class="prog-badge green-badge">🌾 0% DOWN</div>
+          <h4>USDA Rural Loan</h4>
+          <div class="prog-amount">0% Down</div>
+          <div class="prog-couple">Many suburban areas qualify</div>
+          <p>Zero down payment in USDA-eligible areas. More locations qualify than you think.</p>
+          <div class="prog-tip">💡 Check the USDA eligibility map. Thousands of suburban neighborhoods outside cities qualify as "rural."</div>
+        </div>
+        
+        <div class="prog-card animate-card delay-3">
+          <div class="prog-icon">🎁</div>
+          <div class="prog-badge gold-badge">🎁 AVG $18,000</div>
+          <h4>DPA Programs (2,624 active)</h4>
+          <div class="prog-amount">$18,000</div>
+          <div class="prog-couple">Average benefit nationwide</div>
+          <p>Down payment assistance in grants, forgivable loans, and deferred loans. Most buyers qualify for 5-15 programs.</p>
+          <div class="prog-tip">💡 Visit DownPaymentResource.com and enter your zip code. Your lender should show you this — if they aren't, they're not doing their job.</div>
+        </div>
+      </div>
+      
+      <div class="programs-callout section-reveal">
+        <div class="pc-icon">💡</div>
+        <div class="pc-content">
+          <strong id="programsCalloutCA">These programs stack.</strong>
+          <p id="programsCalloutTextCA">A Canadian couple using FHSA + HBP + Land Transfer Rebate could access <strong>$200,000+ in tax-advantaged funds</strong> — on top of a lower purchase price and saved closing costs.</p>
+          <p id="programsCalloutTextUS" class="hidden">A US buyer using NACA + DPA programs + an MCC tax credit could access <strong>$0 down payment, $0 closing costs</strong>, and an annual tax credit on top of it all.</p>
+        </div>
+        <a href="#platform" class="btn-primary">Find All Programs You Qualify For →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AD SLOT 5: LEADERBOARD — After Programs ===== -->
+  <!-- Best placement: between high-value content sections -->
+  <div class="ad-slot ad-leaderboard" id="ad-slot-5" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ===== NEGOTIATION SECTION ===== -->
+  <section class="negotiate-section section-reveal" id="negotiate">
+    <div class="container">
+      <div class="section-tag">🥊 NEGOTIATION</div>
+      <h2 class="section-headline">The 4-Phase Negotiation Playbook</h2>
+      <p class="section-sub">The moves that save $15,000–$50,000 — and why your agent will never teach them to you.</p>
+      
+      <div class="phases-grid">
+        <div class="phase-card animate-card" data-phase="1">
+          <div class="phase-num">01</div>
+          <div class="phase-header">
+            <span class="phase-icon">🔍</span>
+            <h3>Before You Offer</h3>
+          </div>
+          <p class="phase-sub">Set up to win before the game starts</p>
+          <ul class="phase-tactics">
+            <li><span class="tactic-check">✓</span> Research 5-7 comparable sales (comps)</li>
+            <li><span class="tactic-check">✓</span> Check Days on Market (DOM) — your leverage meter</li>
+            <li><span class="tactic-check">✓</span> Order a pre-inspection ($300-$500)</li>
+            <li><span class="tactic-check">✓</span> Find out if seller already bought next home</li>
+          </ul>
+          <div class="phase-secret">
+            <span class="secret-label">💡 DOM Strategy:</span>
+            45+ days = seller is anxious. Offer 5-8% below list.
+          </div>
+        </div>
+        
+        <div class="phase-card animate-card delay-1" data-phase="2">
+          <div class="phase-num">02</div>
+          <div class="phase-header">
+            <span class="phase-icon">📝</span>
+            <h3>Craft the Offer</h3>
+          </div>
+          <p class="phase-sub">The most powerful offer is not the highest one</p>
+          <ul class="phase-tactics">
+            <li><span class="tactic-check">✓</span> Anchor to comps, not list price</li>
+            <li><span class="tactic-check">✓</span> Request seller concessions (not price cuts)</li>
+            <li><span class="tactic-check">✓</span> Include all contingencies — always</li>
+            <li><span class="tactic-check">✓</span> Use escalation clauses in competitive markets</li>
+          </ul>
+          <div class="phase-secret">
+            <span class="secret-label">💡 Concession Hack:</span>
+            Ask seller to pay closing costs instead of cutting price. Same savings, better for comps.
+          </div>
+        </div>
+        
+        <div class="phase-card animate-card delay-2" data-phase="3">
+          <div class="phase-num">03</div>
+          <div class="phase-header">
+            <span class="phase-icon">🔧</span>
+            <h3>After Inspection</h3>
+          </div>
+          <p class="phase-sub">Where most buyers leave thousands on the table</p>
+          <ul class="phase-tactics">
+            <li><span class="tactic-check">✓</span> Categorize defects: safety / major / cosmetic</li>
+            <li><span class="tactic-check">✓</span> Request CREDITS, not repairs</li>
+            <li><span class="tactic-check">✓</span> Get 3 contractor quotes for big items</li>
+            <li><span class="tactic-check">✓</span> Be ready to use the walk-away threat</li>
+          </ul>
+          <div class="phase-secret">
+            <span class="secret-label">💡 Credit vs Repair:</span>
+            Credits let you hire your own contractor. Repairs use the cheapest one.
+          </div>
+        </div>
+        
+        <div class="phase-card animate-card delay-3" data-phase="4">
+          <div class="phase-num">04</div>
+          <div class="phase-header">
+            <span class="phase-icon">✅</span>
+            <h3>Closing Day</h3>
+          </div>
+          <p class="phase-sub">The last chance to protect every dollar</p>
+          <ul class="phase-tactics">
+            <li><span class="tactic-check">✓</span> Request Closing Disclosure 3 days early</li>
+            <li><span class="tactic-check">✓</span> Compare every line to Loan Estimate</li>
+            <li><span class="tactic-check">✓</span> Challenge all new or increased fees</li>
+            <li><span class="tactic-check">✓</span> Final walkthrough 24 hours before</li>
+          </ul>
+          <div class="phase-secret">
+            <span class="secret-label">💡 Your Right:</span>
+            You legally must receive the Closing Disclosure 3 days before closing. Demand it.
+          </div>
+        </div>
+      </div>
+      
+      <div class="negotiate-cta">
+        <div class="negotiate-callout">
+          <div class="ncallout-icon">⚖️</div>
+          <p>Real estate agents have a financial incentive to <strong>CLOSE the deal</strong>, not get you the <strong>BEST deal</strong>. A 3% lower price saves you $15,000 on a $500K home but reduces their commission by just $375. <em>You care 40× more about price than they do.</em></p>
+        </div>
+        <a href="#platform" class="btn-primary btn-large">Get the Full Playbook →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECRETS SECTION ===== -->
+  <section class="secrets-section section-reveal" id="secrets">
+    <div class="container">
+      <div class="section-tag">🔐 INSIDER SECRETS</div>
+      <h2 class="section-headline">10 Things Your Agent & Bank<br><span class="text-gold">Hope You Never Read</span></h2>
+      <p class="section-sub">These secrets go against their business model. That's exactly why they won't tell you.</p>
+      
+      <div class="secrets-grid">
+        <div class="secret-card animate-card" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">🔑</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #1</span>
+              <h4>You Don't Always Need a Buyer's Agent</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge">POST-NAR SETTLEMENT (2024)</div>
+            <p>After the 2024 NAR settlement, rules changed. Sellers are no longer required to offer buyer agent commission. Your options:</p>
+            <ul>
+              <li><strong>Rebate agents</strong> who refund 50-75% of commission to you ($5K-$15K cash back)</li>
+              <li><strong>Flat-fee buyer's agents</strong> ($2K-$5K vs $15K-$25K commission)</li>
+              <li><strong>Direct negotiation</strong> with seller's agent on straightforward deals</li>
+            </ul>
+            <p><em>USA: Clever Real Estate, Redfin, UpNest | Canada: Commission-free.ca, KeyRate</em></p>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card delay-1" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">⚠️</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #2</span>
+              <h4>The Dual Agency Trap</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge warning-badge">CONFLICT OF INTEREST</div>
+            <p>Dual agency = one agent represents both buyer AND seller. They cannot truly advocate for you.</p>
+            <ul>
+              <li>Ask every agent: <em>"Do you represent any sellers whose properties I might see?"</em></li>
+              <li>Prohibited in 8 states (Alaska, Colorado, Florida, Kansas, Maryland, Texas, Vermont, Wyoming)</li>
+              <li>Listing agents earn DOUBLE commission when you call them directly</li>
+            </ul>
+            <p><strong>Solution:</strong> Always use a buyer's-only agent. Never the listing agent.</p>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card delay-2" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">🏦</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #3</span>
+              <h4>Banks Pre-Approve You For More Than You Should Spend</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge danger-badge">BANK PSYCHOLOGY</div>
+            <p>Banks approve up to 43% DTI — their max risk tolerance, not your comfortable budget.</p>
+            <p><strong>On $120K income:</strong> Bank approves ~$720K. Smart budget = ~$415K. Difference = $305K in extra debt.</p>
+            <p>The bank earns <strong>$380,000 more in interest</strong> when you borrow the max. Their pre-approval is a sales pitch, not advice.</p>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">📊</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #4</span>
+              <h4>Rate Shopping WILL NOT Hurt Your Credit</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge success-badge">MYTH BUSTED</div>
+            <p>Multiple mortgage applications within a <strong>14-45 day window = only ONE hard inquiry</strong> on your report.</p>
+            <p>Shopping 5-7 lenders can save 0.5-1% in rate. On a $400K mortgage over 25 years:</p>
+            <ul>
+              <li>0.5% rate difference = <strong>$52,000 in savings</strong></li>
+              <li>1.0% rate difference = <strong>$103,000 in savings</strong></li>
+            </ul>
+            <p>Do it within 45 days. It counts as ONE inquiry.</p>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card delay-1" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">📉</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #5</span>
+              <h4>The 2-1 Buydown — Ask the Seller To Pay It</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge gold-badge-sm">ADVANCED STRATEGY</div>
+            <p>A 2-1 buydown temporarily reduces your rate in the first 2 years — and you can negotiate for the SELLER to pay for it.</p>
+            <p>On a 7% rate: Year 1 = 5% rate | Year 2 = 6% rate | Year 3+ = normal</p>
+            <p><strong>Savings years 1-2:</strong> $7,200-$14,400+ depending on loan size</p>
+            <p>Works best with: New construction, sellers with 45+ DOM, multiple price drops.</p>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card delay-2" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">🌟</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #6</span>
+              <h4>The NACA Program — $0 Everything</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge gold-badge-sm">BEST KEPT SECRET (USA)</div>
+            <p>Zero down payment. Zero closing costs. Zero PMI. Zero minimum credit score. Below-market rates.</p>
+            <p>Banks don't promote NACA because it eliminates their fees entirely. The process takes 3-6 months but the savings are extraordinary — often <strong>$30,000-$80,000</strong> compared to conventional financing.</p>
+            <p>Visit: <strong>naca.com</strong></p>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">🇨🇦</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #7</span>
+              <h4>Canada Stress Test Legal Workarounds</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge ca-badge">CANADA SPECIFIC</div>
+            <p>The B-20 stress test reduces your buying power by ~20%. Legal strategies to maximize qualification:</p>
+            <ul>
+              <li><strong>Provincial credit unions</strong> in QC, AB, BC are not federally regulated — no B-20 required</li>
+              <li><strong>30-year amortization</strong> now available for first-time buyers (2024-25 rules)</li>
+              <li>Add rental income from legal suites to qualifying income</li>
+              <li>Every $500/month in debt eliminated adds ~$75,000 to qualifying amount</li>
+            </ul>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card delay-1" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">🏗️</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #8</span>
+              <h4>New Construction — The Hidden Negotiating Room</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge">NEW CONSTRUCTION</div>
+            <p>Builders have more room to negotiate than they'll ever admit. Especially at end of quarter (Dec 31, Mar 31, Jun 30, Sep 30):</p>
+            <ul>
+              <li>Upgrades included ($15K-$50K value)</li>
+              <li>Closing cost credits ($5K-$20K)</li>
+              <li>Rate buydowns paid by builder</li>
+            </ul>
+            <p><strong>The Lender Trap:</strong> Builders push their preferred lender hard. Always compare outside rates — the incentive often doesn't cover the higher rate.</p>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card delay-2" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">🏚️</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #9</span>
+              <h4>FSBO = Instant Negotiating Power</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge">FSBO STRATEGY</div>
+            <p>For Sale By Owner sellers save $10,000-$25,000 in commission. That savings should be <strong>partially shared with you</strong>:</p>
+            <ul>
+              <li>Negotiate 2-3% below comparable agent-sold comps</li>
+              <li>Request seller-paid closing costs</li>
+              <li>Ask for appliances/furniture included</li>
+            </ul>
+            <p>Canada: Comfree, PropertyGuys | USA: Zillow FSBO, FSBO.com, Craigslist, Nextdoor</p>
+          </div>
+        </div>
+        
+        <div class="secret-card animate-card" onclick="toggleSecret(this)">
+          <div class="secret-header">
+            <span class="secret-icon">📋</span>
+            <div class="secret-info">
+              <span class="secret-num">Secret #10</span>
+              <h4>Fight Low Appraisals — You Have Options</h4>
+            </div>
+            <span class="secret-arrow">+</span>
+          </div>
+          <div class="secret-body">
+            <div class="secret-badge">APPRAISAL STRATEGY</div>
+            <p>Appraisal comes in under purchase price? You have more options than agents tell you:</p>
+            <ul>
+              <li><strong>Request Reconsideration of Value (ROV)</strong> — provide comps the appraiser missed</li>
+              <li>Renegotiate price to match appraisal</li>
+              <li>Use appraisal gap coverage clause strategically</li>
+              <li>Walk away with your earnest money (financing contingency protects you)</li>
+            </ul>
+            <p>Appraisals are opinions, not facts. They're wrong more often than you think.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== AD SLOT 6: IN-CONTENT — After Secrets Vault ===== -->
+  <!-- Best placement: readers have consumed all key content, high intent zone -->
+  <div class="ad-slot ad-in-content" id="ad-slot-6" aria-label="Advertisement">
+    <div class="ad-label">Advertisement</div>
+    <ins class="adsbygoogle"
+         style="display:block; text-align:center;"
+         data-ad-layout="in-article"
+         data-ad-format="fluid"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+
+  <!-- ===== CANADA VS USA COMPARISON ===== -->
+  <section class="compare-section section-reveal" id="compare">
+    <div class="container">
+      <div class="section-tag">🌎 COVERAGE</div>
+      <h2 class="section-headline">Built for <span class="text-gold">Both Countries</span></h2>
+      
+      <div class="compare-grid">
+        <div class="compare-col ca-col">
+          <div class="compare-flag">🇨🇦</div>
+          <h3>Canada</h3>
+          <div class="compare-items">
+            <div class="compare-item">
+              <span class="ci-label">Min Down Payment</span>
+              <span class="ci-value">5% (homes ≤$500K)</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Amortization</span>
+              <span class="ci-value">25 years (30yr for first-time)</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Stress Test</span>
+              <span class="ci-value">Rate + 2% or 5.25%</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Mortgage Insurance</span>
+              <span class="ci-value">CMHC (if &lt;20% down)</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Best Grant</span>
+              <span class="ci-value gold-text">FHSA: $40K tax-free</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Secret Weapon</span>
+              <span class="ci-value gold-text">Provincial credit unions (no stress test)</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="compare-vs">VS</div>
+        
+        <div class="compare-col us-col">
+          <div class="compare-flag">🇺🇸</div>
+          <h3>USA</h3>
+          <div class="compare-items">
+            <div class="compare-item">
+              <span class="ci-label">Min Down Payment</span>
+              <span class="ci-value">3% (Conventional 97)</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Amortization</span>
+              <span class="ci-value">30 years standard</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Stress Test</span>
+              <span class="ci-value">None (max DTI 43-50%)</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Mortgage Insurance</span>
+              <span class="ci-value">PMI (cancellable at 20%)</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Best Program</span>
+              <span class="ci-value gold-text">NACA: $0 down, $0 closing</span>
+            </div>
+            <div class="compare-item">
+              <span class="ci-label">Secret Weapon</span>
+              <span class="ci-value gold-text">2,624 DPA programs (avg $18K)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FINAL CTA SECTION ===== -->
+  <section class="final-cta-section" id="platform">
+    <div class="final-orb final-orb-1"></div>
+    <div class="final-orb final-orb-2"></div>
+    <div class="container">
+      <div class="final-cta-content">
+        <div class="final-badge section-reveal">🔥 FREE — No Sign-Up Required</div>
+        <h2 class="final-headline section-reveal">Stop Overpaying.<br><span class="text-gold">Start Buying Smarter.</span></h2>
+        <p class="final-sub section-reveal">Free tools. Real numbers. Insider knowledge. No agent bias. No sales calls. No email required.</p>
+        
+        <div class="final-features section-reveal">
+          <div class="ff-item"><span>✅</span> Smart Budget Analyzer</div>
+          <div class="ff-item"><span>✅</span> 17 Programs Database</div>
+          <div class="ff-item"><span>✅</span> Negotiation Playbook</div>
+          <div class="ff-item"><span>✅</span> Hidden Fees Detector</div>
+          <div class="ff-item"><span>✅</span> Credit Booster Roadmap</div>
+          <div class="ff-item"><span>✅</span> 10 Insider Secrets</div>
+        </div>
+        
+        <div class="final-ctas section-reveal">
+          <a href="https://buyhomesmarter.com/app" class="btn-primary btn-xl pulse-gold">
+            <span>🚀 Open The Platform Free</span>
+            <span class="btn-arrow">→</span>
+          </a>
+          <a href="https://instagram.com/outsmartyourrealtor" target="_blank" class="btn-secondary btn-xl">
+            <span>📱 Follow @OutsmartYourRealtor</span>
+          </a>
+        </div>
+        
+        <div class="final-domain section-reveal">
+          <span class="domain-label">You're at:</span>
+          <span class="domain-name">buyhomesmarter.com</span>
+          <span class="domain-sep">•</span>
+          <span class="domain-redirect">OutsmartYourRealtor.com redirects here</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <div class="footer-logo">
+            <span class="footer-logo-icon">🏠</span>
+            <span class="footer-logo-text">BuyHomeSmart<span class="gold">er</span></span>
+          </div>
+          <p class="footer-tagline">Built for buyers, by buyers.<br>Fighting for your side since day one.</p>
+          <div class="footer-countries">🇨🇦 Covers Canada | 🇺🇸 Covers USA</div>
+        </div>
+        
+        <div class="footer-col">
+          <h4>Tools</h4>
+          <ul>
+            <li><a href="#features">Budget Analyzer</a></li>
+            <li><a href="#programs">Grant Finder</a></li>
+            <li><a href="#negotiate">Negotiation Playbook</a></li>
+            <li><a href="#features">Hidden Fees Detector</a></li>
+            <li><a href="#features">Credit Booster</a></li>
+            <li><a href="#secrets">Insider Secrets</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>🇨🇦 Canada Resources</h4>
+          <ul>
+            <li><a href="https://www.cmhc-schl.gc.ca" target="_blank">CMHC.ca</a></li>
+            <li><a href="https://www.canada.ca/en/revenue-agency/services/tax/individuals/topics/first-home-savings-account.html" target="_blank">CRA FHSA</a></li>
+            <li><a href="https://www.ratehub.ca" target="_blank">Ratehub.ca</a></li>
+            <li><a href="https://www.borrowell.com" target="_blank">Borrowell (free credit)</a></li>
+          </ul>
+        </div>
+        
+        <div class="footer-col">
+          <h4>🇺🇸 USA Resources</h4>
+          <ul>
+            <li><a href="https://www.hud.gov" target="_blank">HUD.gov</a></li>
+            <li><a href="https://www.consumerfinance.gov" target="_blank">CFPB.gov</a></li>
+            <li><a href="https://downpaymentresource.com" target="_blank">DownPaymentResource.com</a></li>
+            <li><a href="https://www.annualcreditreport.com" target="_blank">AnnualCreditReport.com</a></li>
+            <li><a href="https://www.naca.com" target="_blank">NACA.com</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p class="footer-disclaimer">⚖️ <strong>Disclaimer:</strong> BuyHomeSmarter is an educational platform. Information is for general guidance only and does not constitute financial, legal, or mortgage advice. Always consult qualified professionals for your specific situation. Programs and rates are subject to change.</p>
+        <p class="footer-copy">© 2025 BuyHomeSmarter.com | OutsmartYourRealtor.com redirects here.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scroll to top button -->
+  <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
+
+  <script src="js/main.js"></script>
+<script src="https://www.genspark.ai/sandbox_inspect.js"></script></body>
+</html>
