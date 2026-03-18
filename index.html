@@ -1134,5 +1134,834 @@
   <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Scroll to top">↑</button>
 
   <script src="js/main.js"></script>
-<script src="https://www.genspark.ai/sandbox_inspect.js"></script></body>
+  <!-- ===================================================
+       PLATFORM MODAL — "Open The Platform Free"
+       Full interactive buyer toolkit
+  ==================================================== -->
+  <div class="modal-overlay" id="platformModal" onclick="closePlatformModal(event)">
+    <div class="modal-box" id="platformModalBox">
+      <button class="modal-close" onclick="closePlatformModal()">&times;</button>
+      <div class="modal-header">
+        <div class="modal-logo">🏠 BuyHomeSmarter</div>
+        <h2 class="modal-title">Your Free <span class="text-gold">Buyer Toolkit</span></h2>
+        <p class="modal-subtitle">6 tools. Zero sign-up. 100% on your side.</p>
+      </div>
+
+      <!-- Tool Tabs -->
+      <div class="ptool-tabs">
+        <button class="ptool-tab active" onclick="switchTool('budget',this)">🧮 Budget</button>
+        <button class="ptool-tab" onclick="switchTool('grants',this)">🎁 Grants</button>
+        <button class="ptool-tab" onclick="switchTool('fees',this)">🔍 Fees</button>
+        <button class="ptool-tab" onclick="switchTool('credit',this)">📈 Credit</button>
+        <button class="ptool-tab" onclick="switchTool('rate',this)">📉 Rates</button>
+        <button class="ptool-tab" onclick="switchTool('secrets',this)">🔐 Secrets</button>
+      </div>
+
+      <!-- ── TOOL 1: SMART BUDGET ANALYZER ── -->
+      <div class="ptool-panel active" id="tool-budget">
+        <div class="tool-intro">
+          <div class="tool-icon">🧮</div>
+          <div>
+            <h3>Smart Budget Analyzer</h3>
+            <p>Find what you can <em>actually</em> afford using the 25% rule — not the bank's 43%.</p>
+          </div>
+        </div>
+        <div class="tool-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Annual Gross Income</label>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="income" placeholder="85,000" min="0" oninput="calcBudget()"></div>
+            </div>
+            <div class="form-group">
+              <label>Monthly Debts (car, student loans)</label>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="debts" placeholder="500" min="0" oninput="calcBudget()"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Current Savings / Down Payment</label>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="savings" placeholder="40,000" min="0" oninput="calcBudget()"></div>
+            </div>
+            <div class="form-group">
+              <label>Credit Score Range</label>
+              <select id="creditScore" onchange="calcBudget()">
+                <option value="760">Excellent (760+)</option>
+                <option value="720">Very Good (720–759)</option>
+                <option value="680" selected>Good (680–719)</option>
+                <option value="640">Fair (640–679)</option>
+                <option value="600">Poor (600–639)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Country</label>
+              <select id="budgetCountry" onchange="calcBudget()">
+                <option value="CA">🇨🇦 Canada</option>
+                <option value="US">🇺🇸 USA</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Interest Rate Estimate (%)</label>
+              <div class="input-wrap"><input type="number" id="rate" placeholder="5.5" step="0.1" min="0" max="20" value="5.5" oninput="calcBudget()"><span class="input-suffix">%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="budget-results" id="budgetResults" style="display:none;">
+          <div class="results-grid">
+            <div class="result-card green-card">
+              <div class="rc-label">✅ Smart Budget (25% Rule)</div>
+              <div class="rc-value" id="smartBudget">—</div>
+              <div class="rc-sub">Monthly payment = 25% of gross income</div>
+            </div>
+            <div class="result-card red-card">
+              <div class="rc-label">🏦 Bank Max Approval (43% DTI)</div>
+              <div class="rc-value" id="bankBudget">—</div>
+              <div class="rc-sub">What they'll offer — not what's wise</div>
+            </div>
+            <div class="result-card gold-card">
+              <div class="rc-label">💸 You'd Overpay By</div>
+              <div class="rc-value" id="overpayAmt">—</div>
+              <div class="rc-sub">In extra debt if you max out the bank</div>
+            </div>
+            <div class="result-card blue-card">
+              <div class="rc-label">📅 Recommended Monthly Payment</div>
+              <div class="rc-value" id="monthlyPayment">—</div>
+              <div class="rc-sub">Principal + interest at your rate</div>
+            </div>
+          </div>
+          <div class="budget-breakdown" id="budgetBreakdown"></div>
+          <div class="budget-tip" id="budgetTip"></div>
+        </div>
+        <div class="tool-empty" id="budgetEmpty">👆 Enter your income above to see your smart budget instantly.</div>
+      </div>
+
+      <!-- ── TOOL 2: GRANT FINDER ── -->
+      <div class="ptool-panel" id="tool-grants">
+        <div class="tool-intro">
+          <div class="tool-icon">🎁</div>
+          <div>
+            <h3>$100K+ Grant Finder</h3>
+            <p>Every government program you likely qualify for — most buyers never claim these.</p>
+          </div>
+        </div>
+        <div class="tool-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Country</label>
+              <select id="grantCountry" onchange="findGrants()">
+                <option value="CA">🇨🇦 Canada</option>
+                <option value="US">🇺🇸 USA</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>First-Time Home Buyer?</label>
+              <select id="firstTimeBuyer" onchange="findGrants()">
+                <option value="yes">Yes — First Time</option>
+                <option value="no">No — Owned Before</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Employment Status</label>
+              <select id="employment" onchange="findGrants()">
+                <option value="employed">Employed Full-Time</option>
+                <option value="selfemployed">Self-Employed</option>
+                <option value="veteran">Veteran / Military (USA)</option>
+                <option value="teacher">Teacher / First Responder</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Annual Income</label>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="grantIncome" placeholder="80,000" oninput="findGrants()"></div>
+            </div>
+          </div>
+        </div>
+        <div class="grants-results" id="grantsResults"></div>
+        <div class="tool-empty" id="grantsEmpty">👆 Select your details above — matching programs appear instantly.</div>
+      </div>
+
+      <!-- ── TOOL 3: HIDDEN FEES DETECTOR ── -->
+      <div class="ptool-panel" id="tool-fees">
+        <div class="tool-intro">
+          <div class="tool-icon">🔍</div>
+          <div>
+            <h3>Hidden Fees Detector</h3>
+            <p>The 17 closing fees — sorted by which ones to fight and how.</p>
+          </div>
+        </div>
+        <div class="fees-filter">
+          <button class="fee-filter-btn active" onclick="filterFees('all',this)">All 17 Fees</button>
+          <button class="fee-filter-btn" onclick="filterFees('fight',this)">🥊 Fight These</button>
+          <button class="fee-filter-btn" onclick="filterFees('negotiate',this)">💬 Negotiate</button>
+          <button class="fee-filter-btn" onclick="filterFees('legit',this)">✅ Legit</button>
+        </div>
+        <div class="fees-list" id="feesList"></div>
+        <div class="fees-total">
+          <span>⚡ Potential savings if you fight all junk + negotiate all negotiable fees:</span>
+          <span class="fees-savings">$2,000 – $5,000</span>
+        </div>
+      </div>
+
+      <!-- ── TOOL 4: CREDIT BOOSTER ── -->
+      <div class="ptool-panel" id="tool-credit">
+        <div class="tool-intro">
+          <div class="tool-icon">📈</div>
+          <div>
+            <h3>Credit Booster Roadmap</h3>
+            <p>See exactly how much each credit score range saves — and your personalised 30/60/90-day plan.</p>
+          </div>
+        </div>
+        <div class="tool-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Current Credit Score</label>
+              <select id="currentScore" onchange="calcCredit()">
+                <option value="580">Poor: 580–619</option>
+                <option value="620">Fair: 620–659</option>
+                <option value="660" selected>Good: 660–699</option>
+                <option value="700">Very Good: 700–739</option>
+                <option value="740">Excellent: 740+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Loan Amount</label>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="loanAmt" placeholder="400,000" value="400000" oninput="calcCredit()"></div>
+            </div>
+          </div>
+        </div>
+        <div class="credit-results" id="creditResults"></div>
+      </div>
+
+      <!-- ── TOOL 5: RATE SHOPPER ── -->
+      <div class="ptool-panel" id="tool-rate">
+        <div class="tool-intro">
+          <div class="tool-icon">📉</div>
+          <div>
+            <h3>Rate Shopping Savings Calculator</h3>
+            <p>Multiple lender quotes = ONE hard inquiry. See what shopping around actually saves you.</p>
+          </div>
+        </div>
+        <div class="tool-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Loan Amount</label>
+              <div class="input-wrap"><span class="input-prefix">$</span><input type="number" id="rateLoad" placeholder="400,000" value="400000" oninput="calcRateSavings()"></div>
+            </div>
+            <div class="form-group">
+              <label>First Lender Rate (%)</label>
+              <div class="input-wrap"><input type="number" id="rate1" placeholder="6.5" step="0.05" value="6.5" oninput="calcRateSavings()"><span class="input-suffix">%</span></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Best Rate Found (%)</label>
+              <div class="input-wrap"><input type="number" id="rate2" placeholder="5.9" step="0.05" value="5.9" oninput="calcRateSavings()"><span class="input-suffix">%</span></div>
+            </div>
+            <div class="form-group">
+              <label>Amortization (years)</label>
+              <select id="amortYears" onchange="calcRateSavings()">
+                <option value="25">25 years (Canada)</option>
+                <option value="30" selected>30 years (USA)</option>
+                <option value="20">20 years</option>
+                <option value="15">15 years</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="rate-results" id="rateResults"></div>
+      </div>
+
+      <!-- ── TOOL 6: QUICK SECRETS ── -->
+      <div class="ptool-panel" id="tool-secrets">
+        <div class="tool-intro">
+          <div class="tool-icon">🔐</div>
+          <div>
+            <h3>Top 5 Quick-Win Secrets</h3>
+            <p>The highest-impact actions you can take right now.</p>
+          </div>
+        </div>
+        <div class="quick-secrets-list">
+          <div class="qs-item">
+            <div class="qs-num">01</div>
+            <div class="qs-body">
+              <h4>Open an FHSA Today (Canada) or Check DPA Programs (USA)</h4>
+              <p>Canada: Opening an FHSA starts your contribution clock — you can contribute $8K/year retroactively. Takes 10 minutes at any bank. <strong>Potential value: $40,000 tax-free.</strong></p>
+              <p>USA: Visit <code>DownPaymentResource.com</code> + enter your zip code. Most buyers qualify for 5–15 DPA programs they've never heard of. <strong>Average benefit: $18,000.</strong></p>
+            </div>
+          </div>
+          <div class="qs-item">
+            <div class="qs-num">02</div>
+            <div class="qs-body">
+              <h4>Shop 5–7 Lenders in a 45-Day Window</h4>
+              <p>All mortgage inquiries in a 14–45 day window count as <strong>ONE hard inquiry</strong> on your credit report. Shopping saves the average buyer <strong>$52,000–$103,000</strong> over the life of the loan.</p>
+              <div class="qs-action">📋 Script: <em>"I'm shopping multiple lenders. Can you give me your best rate for a $X mortgage with X% down?"</em></div>
+            </div>
+          </div>
+          <div class="qs-item">
+            <div class="qs-num">03</div>
+            <div class="qs-body">
+              <h4>Order a Pre-Inspection Before Making an Offer</h4>
+              <p>A $300–$500 pre-inspection gives you leverage to negotiate <strong>$5,000–$20,000</strong> in credits or repairs — and lets you walk away with zero risk if the home has serious issues.</p>
+            </div>
+          </div>
+          <div class="qs-item">
+            <div class="qs-num">04</div>
+            <div class="qs-body">
+              <h4>Request Your Closing Disclosure 3 Days Early</h4>
+              <p>You're legally entitled to it. Compare every line to your Loan Estimate. Any fee that appeared or increased is negotiable. This one review can save <strong>$1,000–$3,000</strong>.</p>
+              <div class="qs-action">📋 Script: <em>"I'd like my Closing Disclosure at least 3 business days before closing, as is my legal right."</em></div>
+            </div>
+          </div>
+          <div class="qs-item">
+            <div class="qs-num">05</div>
+            <div class="qs-body">
+              <h4>Never Call the Listing Agent Directly</h4>
+              <p>If you call the listing agent, they can legally represent <em>both</em> you and the seller (dual agency). They earn double commission when you do this. <strong>Always use a buyer's-only agent or negotiate directly with the seller.</strong></p>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center;margin-top:24px;">
+          <a href="#secrets" class="btn-primary" onclick="closePlatformModal()">See All 10 Full Insider Secrets ↓</a>
+        </div>
+      </div>
+
+    </div><!-- end modal-box -->
+  </div>
+
+  <!-- ===================================================
+       NEGOTIATION PLAYBOOK MODAL — "Get the Full Playbook"
+  ==================================================== -->
+  <div class="modal-overlay" id="playbookModal" onclick="closePlaybookModal(event)">
+    <div class="modal-box modal-box-wide" id="playbookModalBox">
+      <button class="modal-close" onclick="closePlaybookModal()">&times;</button>
+      <div class="modal-header">
+        <div class="modal-logo">🥊 Negotiation</div>
+        <h2 class="modal-title">The Full <span class="text-gold">4-Phase Playbook</span></h2>
+        <p class="modal-subtitle">Every tactic. Every script. Every leverage point — in order.</p>
+      </div>
+
+      <div class="playbook-phases">
+        <!-- Phase 1 -->
+        <div class="pb-phase">
+          <div class="pb-phase-header" onclick="togglePhase(this)">
+            <div class="pb-phase-left">
+              <span class="pb-num">Phase 1</span>
+              <div>
+                <span class="pb-icon">🔍</span>
+                <strong>Before You Offer — Research & Setup</strong>
+              </div>
+            </div>
+            <div class="pb-phase-right">
+              <span class="pb-savings">Saves: $5K–$20K</span>
+              <span class="pb-toggle">▼</span>
+            </div>
+          </div>
+          <div class="pb-phase-body open">
+            <div class="pb-tactics">
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">1.1</div>
+                <div class="pb-tactic-body">
+                  <h4>Pull 5–7 Recent Comparable Sales (Comps)</h4>
+                  <p>Go to Zillow, Realtor.com (USA) or Realtor.ca (Canada). Filter: same neighborhood, similar size, sold in last 90 days. Calculate average price-per-sqft.</p>
+                  <div class="pb-script">📋 <strong>Use this number</strong> — not the list price — as your anchor in all negotiations.</div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">1.2</div>
+                <div class="pb-tactic-body">
+                  <h4>Check Days on Market (DOM) — Your Leverage Meter</h4>
+                  <div class="dom-table">
+                    <div class="dom-row"><span class="dom-days">0–14 days</span><span class="dom-action">Likely multiple offers. Offer at or slightly above asking.</span></div>
+                    <div class="dom-row"><span class="dom-days">15–44 days</span><span class="dom-action">Normal market. Offer 1–3% below asking with conditions.</span></div>
+                    <div class="dom-row dom-row-hot"><span class="dom-days">45–90 days</span><span class="dom-action dom-hot">Seller is anxious. Offer 5–8% below asking. Ask for concessions.</span></div>
+                    <div class="dom-row dom-row-hot"><span class="dom-days">90+ days</span><span class="dom-action dom-hot">Seller is desperate. Offer 8–12% below. Request all closing costs paid.</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">1.3</div>
+                <div class="pb-tactic-body">
+                  <h4>Order a Pre-Inspection ($300–$500)</h4>
+                  <p>Before making any offer. This removes the "emotional decision" trap and gives you a professional defect list to negotiate with — rather than guessing.</p>
+                  <div class="pb-script">💡 <strong>Pro tip:</strong> If the seller refuses access for a pre-inspection, that alone is a red flag. Walk away.</div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">1.4</div>
+                <div class="pb-tactic-body">
+                  <h4>Find Out If the Seller Already Bought</h4>
+                  <p>Ask your agent: "Has the seller already purchased their next property?" If yes, they're under enormous pressure to close on a deadline. <strong>This is your most powerful leverage point.</strong></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="pb-phase">
+          <div class="pb-phase-header" onclick="togglePhase(this)">
+            <div class="pb-phase-left">
+              <span class="pb-num">Phase 2</span>
+              <div>
+                <span class="pb-icon">📝</span>
+                <strong>Crafting the Offer — The Art of the Anchor</strong>
+              </div>
+            </div>
+            <div class="pb-phase-right">
+              <span class="pb-savings">Saves: $5K–$30K</span>
+              <span class="pb-toggle">▶</span>
+            </div>
+          </div>
+          <div class="pb-phase-body">
+            <div class="pb-tactics">
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">2.1</div>
+                <div class="pb-tactic-body">
+                  <h4>Anchor to Comps — Not List Price</h4>
+                  <p>The list price is a marketing number. Your comps analysis is the real market value. Always open your offer based on comps, then justify in writing.</p>
+                  <div class="pb-script">📋 <strong>Script:</strong> <em>"Based on 6 comparable sales in the last 90 days (avg $X/sqft), our offer of $Y reflects current market value. We've enclosed our comp analysis."</em></div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">2.2</div>
+                <div class="pb-tactic-body">
+                  <h4>Ask for Seller Concessions — Not Price Cuts</h4>
+                  <p>Requesting the seller pay your closing costs (2–3% of purchase price) saves you the same money as a price cut — but doesn't affect the appraisal value or what the seller "appears" to accept publicly.</p>
+                  <div class="pb-script">💡 <strong>On a $500K home:</strong> "Pay my $10,000 in closing costs" = same savings as dropping price to $490K, but seller psychologically feels better about the "sale price."</div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">2.3</div>
+                <div class="pb-tactic-body">
+                  <h4>Always Include All Contingencies</h4>
+                  <div class="contingency-list">
+                    <div class="cont-item"><span class="cont-check">✓</span><div><strong>Financing Contingency</strong> — lets you walk away if mortgage falls through. Keep your earnest money.</div></div>
+                    <div class="cont-item"><span class="cont-check">✓</span><div><strong>Inspection Contingency</strong> — lets you negotiate repairs/credits or exit.</div></div>
+                    <div class="cont-item"><span class="cont-check">✓</span><div><strong>Appraisal Contingency</strong> — protects you if the home appraises under purchase price.</div></div>
+                    <div class="cont-item"><span class="cont-check">✓</span><div><strong>Title Contingency</strong> — ensures clean ownership history.</div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">2.4</div>
+                <div class="pb-tactic-body">
+                  <h4>The 2-1 Buydown Request (Advanced)</h4>
+                  <p>Ask the seller to fund a 2-1 rate buydown. Reduces your rate by 2% in Year 1 and 1% in Year 2. Costs the seller ~$7,200–$14,400 but saves you that exact amount.</p>
+                  <div class="pb-script">📋 <strong>Best with:</strong> New construction builders, homes with 45+ DOM, or sellers who've already dropped price twice.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="pb-phase">
+          <div class="pb-phase-header" onclick="togglePhase(this)">
+            <div class="pb-phase-left">
+              <span class="pb-num">Phase 3</span>
+              <div>
+                <span class="pb-icon">🔧</span>
+                <strong>After Inspection — Maximum Leverage</strong>
+              </div>
+            </div>
+            <div class="pb-phase-right">
+              <span class="pb-savings">Saves: $3K–$25K</span>
+              <span class="pb-toggle">▶</span>
+            </div>
+          </div>
+          <div class="pb-phase-body">
+            <div class="pb-tactics">
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">3.1</div>
+                <div class="pb-tactic-body">
+                  <h4>Categorize Every Defect — Safety / Major / Cosmetic</h4>
+                  <div class="defect-table">
+                    <div class="defect-row"><span class="defect-type red">Safety</span><span>Electrical, structural, mold, roof — <strong>always request credit or repair.</strong> These are deal-breakers.</span></div>
+                    <div class="defect-row"><span class="defect-type gold">Major</span><span>HVAC, plumbing, water heater — get 3 contractor quotes, request credit equal to highest quote.</span></div>
+                    <div class="defect-row"><span class="defect-type gray">Cosmetic</span><span>Paint, carpet, minor scratches — accept or use as final negotiation chip at closing.</span></div>
+                  </div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">3.2</div>
+                <div class="pb-tactic-body">
+                  <h4>Request CREDITS, Not Repairs</h4>
+                  <p>When sellers do repairs, they use the cheapest contractor they can find. When you receive a credit, <em>you</em> hire your own contractor and control the quality.</p>
+                  <div class="pb-script">📋 <strong>Script:</strong> <em>"Rather than having the seller arrange repairs, we'd prefer a $[amount] credit at closing toward remediation. This simplifies the transaction for both parties."</em></div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">3.3</div>
+                <div class="pb-tactic-body">
+                  <h4>The Walk-Away Threat — Your Nuclear Option</h4>
+                  <p>If the seller refuses reasonable repair credits on major defects, you can walk away and keep your earnest money (covered by your inspection contingency). Sellers know this.</p>
+                  <div class="pb-script">📋 <strong>Script:</strong> <em>"Given the inspection findings, we need either a $[X] credit or the specific repairs completed before closing. Otherwise, we'll have to exercise our inspection contingency."</em></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="pb-phase">
+          <div class="pb-phase-header" onclick="togglePhase(this)">
+            <div class="pb-phase-left">
+              <span class="pb-num">Phase 4</span>
+              <div>
+                <span class="pb-icon">✅</span>
+                <strong>Closing Day — Protect Every Dollar</strong>
+              </div>
+            </div>
+            <div class="pb-phase-right">
+              <span class="pb-savings">Saves: $1K–$5K</span>
+              <span class="pb-toggle">▶</span>
+            </div>
+          </div>
+          <div class="pb-phase-body">
+            <div class="pb-tactics">
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">4.1</div>
+                <div class="pb-tactic-body">
+                  <h4>Demand the Closing Disclosure 3 Days Early</h4>
+                  <p>This is your <strong>legal right</strong> in the USA (CFPB rule). In Canada, request the final statement of adjustments at least 48 hours prior. Gives you time to dispute before you're at the table.</p>
+                  <div class="pb-script">📋 <strong>Script:</strong> <em>"I'd like my Closing Disclosure at least 3 full business days before closing, as required by law."</em></div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">4.2</div>
+                <div class="pb-tactic-body">
+                  <h4>Compare Every Line to Your Loan Estimate</h4>
+                  <p>Lenders are required to honor the fees on your Loan Estimate (within tolerances). Any fee that increased more than 10% OR appeared new is a violation — call it out immediately.</p>
+                  <div class="pb-script">📋 <strong>Script:</strong> <em>"This [fee name] increased by $[X] from my Loan Estimate. Per RESPA/CFPB rules, I'd like this corrected before I sign."</em></div>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">4.3</div>
+                <div class="pb-tactic-body">
+                  <h4>The Final Walkthrough — 24 Hours Before</h4>
+                  <p>Verify: all agreed repairs completed, nothing removed that was supposed to stay (appliances, fixtures), no new damage since the last showing. Document everything with photos.</p>
+                </div>
+              </div>
+              <div class="pb-tactic">
+                <div class="pb-tactic-num">4.4</div>
+                <div class="pb-tactic-body">
+                  <h4>The Last-Minute Ask</h4>
+                  <p>At the closing table, it's not too late to ask: "Can you throw in the lawn mower, outdoor furniture, or smart home devices?" Sellers at this stage almost always say yes to small requests rather than risk the deal.</p>
+                  <div class="pb-script">💡 <strong>This costs them nothing, saves you $500–$2,000, and takes 10 seconds to ask.</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- end playbook-phases -->
+
+      <div class="playbook-footer">
+        <div class="pf-savings-box">
+          <div class="pfs-label">Total potential savings using this playbook:</div>
+          <div class="pfs-amount">$14,000 – $80,000</div>
+          <div class="pfs-sub">Based on a $400K–$700K home purchase</div>
+        </div>
+        <a href="#negotiate" class="btn-primary btn-large" onclick="closePlaybookModal()">Review The 4 Phases On The Page ↓</a>
+      </div>
+
+    </div><!-- end modal-box-wide -->
+  </div>
+
+  <!-- ===== MODAL STYLES (injected inline for self-containment) ===== -->
+  <style>
+    /* ---- MODAL OVERLAY ---- */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      overflow-y: auto;
+      padding: 20px;
+    }
+    .modal-overlay.open { display: flex; align-items: flex-start; justify-content: center; }
+
+    .modal-box {
+      background: linear-gradient(135deg, #141230 0%, #1e1b4b 100%);
+      border: 1px solid rgba(255,215,0,0.2);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 820px;
+      margin: auto;
+      padding: 0;
+      position: relative;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8), 0 0 60px rgba(255,215,0,0.05);
+      animation: modalIn 0.35s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .modal-box-wide { max-width: 960px; }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.92) translateY(20px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: white;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.25rem;
+      line-height: 1;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.15); transform: scale(1.1); }
+
+    .modal-header {
+      padding: 36px 40px 28px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      text-align: center;
+    }
+    .modal-logo { font-size: 0.85rem; font-weight: 700; color: rgba(255,215,0,0.7); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 12px; }
+    .modal-title { font-size: clamp(1.5rem, 4vw, 2.25rem); font-weight: 900; color: white; margin-bottom: 8px; }
+    .modal-subtitle { color: rgba(255,255,255,0.6); font-size: 0.95rem; }
+
+    /* ---- PLATFORM TOOL TABS ---- */
+    .ptool-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 16px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .ptool-tabs::-webkit-scrollbar { display: none; }
+
+    .ptool-tab {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.55);
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+    .ptool-tab:hover { background: rgba(255,215,0,0.08); color: #FFD700; }
+    .ptool-tab.active { background: #FFD700; color: #0a0a0a; border-color: #FFD700; font-weight: 800; }
+
+    .ptool-panel { display: none; padding: 28px 32px 32px; }
+    .ptool-panel.active { display: block; }
+
+    .tool-intro {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    .tool-icon { font-size: 2.25rem; flex-shrink: 0; line-height: 1; margin-top: 2px; }
+    .tool-intro h3 { font-size: 1.25rem; color: white; margin-bottom: 4px; }
+    .tool-intro p { color: rgba(255,255,255,0.6); font-size: 0.9rem; }
+    .tool-intro em { color: #FFD700; font-style: normal; }
+
+    /* ---- FORM ELEMENTS ---- */
+    .tool-form { margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: 0.8rem; font-weight: 600; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.06em; }
+    .form-group input, .form-group select {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: white;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: rgba(255,215,0,0.4); }
+    .form-group select option { background: #1e1b4b; }
+    .input-wrap { position: relative; }
+    .input-prefix { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: rgba(255,215,0,0.7); font-weight: 700; pointer-events: none; }
+    .input-suffix { position: absolute; right: 12px; top: 50%; transform: translateY(-50%); color: rgba(255,215,0,0.7); font-weight: 700; pointer-events: none; }
+    .input-wrap input { padding-left: 28px; }
+    .input-wrap input:has(+ .input-suffix) { padding-right: 32px; }
+
+    /* ---- BUDGET RESULTS ---- */
+    .budget-results { animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .results-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .result-card { border-radius: 12px; padding: 16px 20px; }
+    .rc-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; opacity: 0.8; }
+    .rc-value { font-size: 1.65rem; font-weight: 900; margin-bottom: 4px; letter-spacing: -0.02em; }
+    .rc-sub { font-size: 0.75rem; opacity: 0.7; line-height: 1.4; }
+    .green-card  { background: rgba(34,197,94,0.1);  border: 1px solid rgba(34,197,94,0.25);  color: #22C55E; }
+    .red-card    { background: rgba(239,68,68,0.1);  border: 1px solid rgba(239,68,68,0.25);  color: #EF4444; }
+    .gold-card   { background: rgba(255,215,0,0.1);  border: 1px solid rgba(255,215,0,0.25);  color: #FFD700; }
+    .blue-card   { background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.25); color: #60A5FA; }
+
+    .budget-breakdown { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 16px; margin-bottom: 12px; font-size: 0.85rem; }
+    .bd-row { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.04); color: rgba(255,255,255,0.65); }
+    .bd-row:last-child { border-bottom: none; }
+    .bd-row strong { color: white; }
+
+    .budget-tip { background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.15); border-radius: 10px; padding: 14px 16px; font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+    .budget-tip strong { color: #FFD700; }
+
+    .tool-empty { text-align: center; padding: 40px; color: rgba(255,255,255,0.35); font-size: 0.95rem; border: 1px dashed rgba(255,255,255,0.1); border-radius: 12px; }
+
+    /* ---- GRANTS ---- */
+    .grants-results { display: flex; flex-direction: column; gap: 12px; }
+    .grant-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 18px 20px; }
+    .grant-card.gold-grant { border-color: rgba(255,215,0,0.25); background: rgba(255,215,0,0.04); }
+    .grant-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 8px; }
+    .grant-icon { font-size: 1.5rem; }
+    .grant-badge { font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; background: rgba(255,215,0,0.15); color: #FFD700; border: 1px solid rgba(255,215,0,0.25); }
+    .grant-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 2px; }
+    .grant-amount { font-size: 1.35rem; font-weight: 900; color: #FFD700; }
+    .grant-desc { font-size: 0.83rem; color: rgba(255,255,255,0.6); margin-bottom: 8px; line-height: 1.5; }
+    .grant-action { font-size: 0.78rem; color: rgba(255,215,0,0.8); background: rgba(255,215,0,0.06); padding: 8px 10px; border-radius: 6px; }
+    .grants-total { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+    .gt-label { font-size: 0.85rem; color: rgba(255,255,255,0.6); }
+    .gt-amount { font-size: 1.35rem; font-weight: 900; color: #22C55E; }
+
+    /* ---- FEES ---- */
+    .fees-filter { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .fee-filter-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.55); font-size: 0.8rem; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif; }
+    .fee-filter-btn:hover { background: rgba(255,215,0,0.08); color: #FFD700; }
+    .fee-filter-btn.active { background: #FFD700; color: #0a0a0a; border-color: #FFD700; }
+
+    .fees-list { display: flex; flex-direction: column; gap: 6px; max-height: 340px; overflow-y: auto; padding-right: 4px; scrollbar-width: thin; scrollbar-color: rgba(255,215,0,0.2) transparent; }
+    .fee-item { display: flex; align-items: flex-start; gap: 14px; padding: 12px 14px; border-radius: 8px; border: 1px solid transparent; }
+    .fee-item.fight   { background: rgba(239,68,68,0.06);  border-color: rgba(239,68,68,0.15); }
+    .fee-item.negotiate { background: rgba(245,158,11,0.06); border-color: rgba(245,158,11,0.15); }
+    .fee-item.legit   { background: rgba(34,197,94,0.04);  border-color: rgba(34,197,94,0.12); }
+    .fee-badge { font-size: 0.65rem; font-weight: 800; padding: 2px 7px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; text-transform: uppercase; }
+    .badge-fight { background: rgba(239,68,68,0.2); color: #EF4444; }
+    .badge-negotiate { background: rgba(245,158,11,0.2); color: #F59E0B; }
+    .badge-legit { background: rgba(34,197,94,0.15); color: #22C55E; }
+    .fee-name { font-size: 0.9rem; font-weight: 700; color: white; margin-bottom: 2px; }
+    .fee-desc { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.4; }
+    .fee-script { font-size: 0.76rem; color: rgba(255,215,0,0.75); margin-top: 4px; font-style: italic; }
+    .fees-total { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding: 12px 14px; background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.15); border-radius: 8px; font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+    .fees-savings { font-weight: 900; color: #22C55E; font-size: 1rem; }
+
+    /* ---- CREDIT ---- */
+    .credit-results { display: flex; flex-direction: column; gap: 12px; }
+    .credit-tier { padding: 14px 18px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .credit-tier.current-tier { border-color: rgba(255,215,0,0.35); background: rgba(255,215,0,0.06); }
+    .ct-left h4 { font-size: 0.9rem; margin-bottom: 2px; }
+    .ct-left p { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+    .ct-rate { font-size: 1.1rem; font-weight: 900; color: #FFD700; white-space: nowrap; }
+    .ct-savings { font-size: 0.8rem; color: #22C55E; text-align: right; white-space: nowrap; }
+    .credit-plan { background: rgba(255,215,0,0.06); border: 1px solid rgba(255,215,0,0.15); border-radius: 12px; padding: 18px 20px; margin-top: 8px; }
+    .cp-title { font-size: 0.85rem; font-weight: 800; color: #FFD700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+    .cp-step { display: flex; gap: 12px; margin-bottom: 10px; }
+    .cp-day { font-size: 0.72rem; font-weight: 800; color: #FFD700; background: rgba(255,215,0,0.12); padding: 3px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; height: fit-content; margin-top: 1px; }
+    .cp-step p { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+
+    /* ---- RATE SAVINGS ---- */
+    .rate-results { display: flex; flex-direction: column; gap: 12px; }
+    .rate-comparison { display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; }
+    .rate-col { padding: 16px; border-radius: 10px; text-align: center; }
+    .rate-col.bad-rate { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); }
+    .rate-col.good-rate { background: rgba(34,197,94,0.08); border: 1px solid rgba(34,197,94,0.2); }
+    .rate-col .rc-val { font-size: 1.5rem; font-weight: 900; margin-bottom: 4px; }
+    .bad-rate .rc-val { color: #EF4444; }
+    .good-rate .rc-val { color: #22C55E; }
+    .rate-col .rc-label { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+    .rate-vs { font-size: 1rem; font-weight: 900; color: rgba(255,255,255,0.3); text-align: center; }
+    .rate-savings-box { background: rgba(255,215,0,0.08); border: 1px solid rgba(255,215,0,0.2); border-radius: 10px; padding: 16px 20px; text-align: center; }
+    .rsb-label { font-size: 0.8rem; color: rgba(255,255,255,0.5); margin-bottom: 6px; }
+    .rsb-amount { font-size: 2rem; font-weight: 900; color: #FFD700; letter-spacing: -0.02em; }
+    .rsb-sub { font-size: 0.78rem; color: rgba(255,255,255,0.45); margin-top: 4px; }
+    .rate-tip { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15); border-radius: 8px; padding: 12px 14px; font-size: 0.82rem; color: rgba(255,255,255,0.65); }
+    .rate-tip strong { color: #22C55E; }
+
+    /* ---- QUICK SECRETS ---- */
+    .quick-secrets-list { display: flex; flex-direction: column; gap: 0; }
+    .qs-item { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    .qs-item:last-child { border-bottom: none; }
+    .qs-num { font-size: 1.5rem; font-weight: 900; color: rgba(255,215,0,0.2); flex-shrink: 0; width: 40px; text-align: right; line-height: 1.3; }
+    .qs-body h4 { font-size: 0.95rem; color: white; margin-bottom: 6px; }
+    .qs-body p { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 6px; line-height: 1.55; }
+    .qs-body code { background: rgba(255,215,0,0.1); color: #FFD700; padding: 1px 6px; border-radius: 4px; font-size: 0.83rem; }
+    .qs-action { background: rgba(255,215,0,0.06); border-left: 3px solid rgba(255,215,0,0.4); padding: 8px 12px; border-radius: 0 6px 6px 0; font-size: 0.8rem; color: rgba(255,255,255,0.6); font-style: italic; }
+
+    /* ---- PLAYBOOK ---- */
+    .playbook-phases { padding: 8px 0; }
+    .pb-phase { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .pb-phase:last-child { border-bottom: none; }
+    .pb-phase-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 32px; cursor: pointer; user-select: none; transition: background 0.2s; gap: 16px; }
+    .pb-phase-header:hover { background: rgba(255,255,255,0.02); }
+    .pb-phase-left { display: flex; align-items: center; gap: 14px; }
+    .pb-phase-right { display: flex; align-items: center; gap: 14px; flex-shrink: 0; }
+    .pb-num { font-size: 0.7rem; font-weight: 900; color: #FFD700; background: rgba(255,215,0,0.12); padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+    .pb-icon { font-size: 1.25rem; }
+    .pb-phase-left strong { font-size: 1rem; color: white; }
+    .pb-savings { font-size: 0.78rem; font-weight: 700; color: #22C55E; }
+    .pb-toggle { color: rgba(255,215,0,0.6); font-size: 0.9rem; transition: transform 0.25s; }
+    .pb-phase-body { display: none; padding: 0 32px 24px; }
+    .pb-phase-body.open { display: block; }
+    .pb-tactics { display: flex; flex-direction: column; gap: 16px; }
+    .pb-tactic { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+    .pb-tactic:last-child { border-bottom: none; }
+    .pb-tactic-num { font-size: 0.7rem; font-weight: 900; color: rgba(255,215,0,0.4); flex-shrink: 0; padding-top: 3px; width: 28px; }
+    .pb-tactic-body h4 { font-size: 0.95rem; color: white; margin-bottom: 6px; }
+    .pb-tactic-body p { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 8px; line-height: 1.55; }
+    .pb-script { background: rgba(255,215,0,0.06); border-left: 3px solid rgba(255,215,0,0.35); padding: 10px 12px; border-radius: 0 6px 6px 0; font-size: 0.82rem; color: rgba(255,255,255,0.65); margin-top: 6px; line-height: 1.55; }
+    .pb-script strong { color: #FFD700; }
+    .pb-script em { color: rgba(255,255,255,0.75); font-style: italic; }
+
+    .dom-table { display: flex; flex-direction: column; gap: 6px; margin-top: 8px; }
+    .dom-row { display: flex; gap: 12px; padding: 8px 10px; background: rgba(255,255,255,0.03); border-radius: 6px; font-size: 0.82rem; }
+    .dom-row-hot { background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.15); }
+    .dom-days { font-weight: 800; color: white; width: 90px; flex-shrink: 0; }
+    .dom-action { color: rgba(255,255,255,0.6); }
+    .dom-hot { color: #22C55E; font-weight: 600; }
+
+    .contingency-list { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .cont-item { display: flex; gap: 10px; font-size: 0.85rem; color: rgba(255,255,255,0.65); }
+    .cont-check { color: #22C55E; flex-shrink: 0; }
+
+    .defect-table { display: flex; flex-direction: column; gap: 8px; margin-top: 8px; }
+    .defect-row { display: flex; gap: 12px; padding: 8px 10px; border-radius: 6px; background: rgba(255,255,255,0.03); font-size: 0.82rem; align-items: flex-start; }
+    .defect-type { font-size: 0.68rem; font-weight: 800; padding: 2px 8px; border-radius: 4px; white-space: nowrap; flex-shrink: 0; }
+    .defect-type.red { background: rgba(239,68,68,0.15); color: #EF4444; }
+    .defect-type.gold { background: rgba(255,215,0,0.12); color: #FFD700; }
+    .defect-type.gray { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+    .defect-row span:last-child { color: rgba(255,255,255,0.6); }
+
+    .playbook-footer { padding: 28px 32px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+    .pf-savings-box { }
+    .pfs-label { font-size: 0.78rem; color: rgba(255,255,255,0.45); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .pfs-amount { font-size: 1.75rem; font-weight: 900; color: #22C55E; letter-spacing: -0.02em; }
+    .pfs-sub { font-size: 0.75rem; color: rgba(255,255,255,0.35); }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 640px) {
+      .modal-overlay { padding: 0; }
+      .modal-box { border-radius: 20px 20px 0 0; margin-top: auto; min-height: 85vh; }
+      .modal-header { padding: 28px 20px 20px; }
+      .ptool-panel { padding: 20px 16px 24px; }
+      .form-row { grid-template-columns: 1fr; }
+      .results-grid { grid-template-columns: 1fr 1fr; }
+      .pb-phase-header { padding: 16px 20px; }
+      .pb-phase-body { padding: 0 20px 20px; }
+      .playbook-footer { flex-direction: column; text-align: center; padding: 20px; }
+      .rate-comparison { grid-template-columns: 1fr; }
+      .rate-vs { display: none; }
+    }
+  </style>
+
+   <script src="js/main.js"></script>
+</body>
 </html>
