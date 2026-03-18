@@ -1057,7 +1057,7 @@
         </div>
         
         <div class="final-ctas section-reveal">
-          <a href="https://buyhomesmarter.com/app" class="btn-primary btn-xl pulse-gold">
+          <a href="#platform" class="btn-primary btn-xl pulse-gold">
             <span>🚀 Open The Platform Free</span>
             <span class="btn-arrow">→</span>
           </a>
@@ -1963,5 +1963,416 @@
   </style>
 
    <script src="js/main.js"></script>
+<!-- JS Update -->
+  <script>
+  // ============================================================
+  //  PLATFORM MODAL — Open / Close
+  // ============================================================
+  function openPlatformModal(toolId) {
+    document.getElementById('platformModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+    if (toolId) switchTool(toolId, null);
+    // Init tools on first open
+    findGrants();
+    buildFeesList();
+    calcCredit();
+    calcRateSavings();
+  }
+
+  function closePlatformModal(e) {
+    if (e && e.target !== document.getElementById('platformModal')) return;
+    document.getElementById('platformModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ============================================================
+  //  PLAYBOOK MODAL — Open / Close
+  // ============================================================
+  function openPlaybookModal() {
+    document.getElementById('playbookModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closePlaybookModal(e) {
+    if (e && e.target !== document.getElementById('playbookModal')) return;
+    document.getElementById('playbookModal').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // ============================================================
+  //  TOOL TAB SWITCHER
+  // ============================================================
+  function switchTool(id, btn) {
+    document.querySelectorAll('.ptool-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.ptool-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('tool-' + id).classList.add('active');
+    if (btn) btn.classList.add('active');
+    else {
+      document.querySelectorAll('.ptool-tab').forEach(t => {
+        if (t.getAttribute('onclick').includes("'" + id + "'")) t.classList.add('active');
+      });
+    }
+  }
+
+  // ============================================================
+  //  PLAYBOOK PHASE TOGGLE
+  // ============================================================
+  function togglePhase(header) {
+    const body = header.nextElementSibling;
+    const toggle = header.querySelector('.pb-toggle');
+    const isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    toggle.textContent = isOpen ? '▶' : '▼';
+  }
+
+  // ============================================================
+  //  BUDGET CALCULATOR
+  // ============================================================
+  function calcBudget() {
+    const income  = parseFloat(document.getElementById('income').value) || 0;
+    const debts   = parseFloat(document.getElementById('debts').value) || 0;
+    const savings = parseFloat(document.getElementById('savings').value) || 0;
+    const rate    = parseFloat(document.getElementById('rate').value) || 5.5;
+    const country = document.getElementById('budgetCountry').value;
+
+    const el = id => document.getElementById(id);
+
+    if (!income) {
+      el('budgetResults').style.display = 'none';
+      el('budgetEmpty').style.display = 'block';
+      return;
+    }
+    el('budgetResults').style.display = 'block';
+    el('budgetEmpty').style.display = 'none';
+
+    const monthlyIncome = income / 12;
+    const smartMonthly  = monthlyIncome * 0.25 - debts;  // 25% rule
+    const bankMonthly   = monthlyIncome * 0.43 - debts;  // 43% DTI
+
+    const monthlyRate = rate / 100 / 12;
+    const amort = country === 'CA' ? 25 * 12 : 30 * 12;
+
+    function calcLoan(pmt) {
+      if (monthlyRate === 0) return pmt * amort;
+      return pmt * (1 - Math.pow(1 + monthlyRate, -amort)) / monthlyRate;
+    }
+
+    const smartLoan = Math.max(calcLoan(smartMonthly), 0);
+    const bankLoan  = Math.max(calcLoan(bankMonthly), 0);
+    const smartTotal = smartLoan + savings;
+    const bankTotal  = bankLoan  + savings;
+    const overpay    = bankTotal - smartTotal;
+
+    const fmt = n => '$' + Math.round(n).toLocaleString();
+
+    el('smartBudget').textContent   = fmt(smartTotal);
+    el('bankBudget').textContent    = fmt(bankTotal);
+    el('overpayAmt').textContent    = fmt(Math.max(overpay, 0));
+    el('monthlyPayment').textContent = fmt(Math.max(smartMonthly, 0)) + '/mo';
+
+    // Breakdown
+    const cmhcPct = savings / smartTotal < 0.20 ? (savings / smartTotal < 0.10 ? 0.04 : savings / smartTotal < 0.15 ? 0.031 : 0.028) : 0;
+    const cmhc = country === 'CA' ? smartLoan * cmhcPct : 0;
+    el('budgetBreakdown').innerHTML = `
+      <div class="bd-row"><span>Down Payment</span><strong>${fmt(savings)}</strong></div>
+      <div class="bd-row"><span>Smart Mortgage (25% rule)</span><strong>${fmt(smartLoan)}</strong></div>
+      ${country === 'CA' ? `<div class="bd-row"><span>CMHC Insurance (if &lt;20% down)</span><strong>${fmt(cmhc)}</strong></div>` : ''}
+      <div class="bd-row"><span>Estimated Closing Costs (~2%)</span><strong>${fmt(smartTotal * 0.02)}</strong></div>
+      <div class="bd-row"><span>Recommended Emergency Fund (3mo)</span><strong>${fmt(smartMonthly * 3)}</strong></div>
+    `;
+
+    const downPct = (savings / smartTotal * 100).toFixed(1);
+    el('budgetTip').innerHTML = `
+      <strong>💡 Your situation:</strong> Your ${downPct}% down payment
+      ${parseFloat(downPct) < 20 ? (country === 'CA' ? ' triggers CMHC mortgage insurance. Consider saving to 20% to eliminate it.' : ' may require PMI — cancellable when you reach 20% equity.') : ' avoids mortgage insurance entirely. '}
+      Rate shopping 5–7 lenders at ${rate}% could save you <strong>${fmt((bankLoan - smartLoan) * 0.005)}</strong> vs accepting the first offer.
+    `;
+  }
+
+  // ============================================================
+  //  GRANT FINDER
+  // ============================================================
+  const ALL_GRANTS = {
+    CA: [
+      { icon:'💼', badge:'🏆 BEST VALUE', title:'First Home Savings Account (FHSA)', amount:'$40,000', desc:'Tax-deductible contributions + tax-free withdrawals for your first home. $8,000/year, $40,000 lifetime. Opens in 10 minutes at any bank.', action:'💡 Open TODAY — contribution room accumulates from the date you open it, not when you start saving.', type:'gold', always: true },
+      { icon:'🏦', badge:'💰 UP TO $60K', title:'RRSP Home Buyers\' Plan (HBP)', amount:'$60,000', desc:'Withdraw up to $60,000 from your RRSP tax-free for a down payment. Repay over 15 years. Combine with FHSA = $100K per person.', action:'💡 FHSA + HBP combined = $100,000 per person / $200,000 per couple in tax-advantaged funds.', type:'blue', always: true },
+      { icon:'🏛️', badge:'💳 UP TO $8,475', title:'Land Transfer Tax Rebate', amount:'$4,000 – $8,475', desc:'Ontario: $4K rebate. Toronto adds $4,475 for a total of $8,475. BC: $8,000. PEI: $2,000. Applied automatically at closing.', action:'💡 Tell your lawyer you\'re a first-time buyer — they\'ll apply it automatically.', type:'green', firstTime: true },
+      { icon:'🏗️', badge:'🏗️ UP TO $50K', title:'GST/HST Exemption (New Builds)', amount:'Up to $50,000', desc:'Federal proposal eliminates 5% GST on new-build homes for first-time buyers under $1M. Ask your builder explicitly.', action:'💡 Builders may not volunteer this — ask: "Am I eligible for the GST first-time buyer exemption?"', type:'orange', firstTime: true },
+      { icon:'🏠', badge:'🇨🇦 FEDERAL', title:'First-Time Home Buyer\'s Tax Credit', amount:'$1,500', desc:'Claim $10,000 on your federal tax return = $1,500 tax credit. Non-refundable but reduces tax owed.', action:'💡 Claim on Schedule 1 of your T1 return. Your accountant should flag this automatically.', type:'green', firstTime: true },
+    ],
+    US: [
+      { icon:'⭐', badge:'🌟 $0 EVERYTHING', title:'NACA Program', amount:'$0 Down + $0 Closing', desc:'Zero down payment, zero closing costs, zero PMI, zero minimum credit score, below-market rates. Savings: $30,000–$80,000 vs conventional.', action:'💡 Visit naca.com — process takes 3–6 months but eliminates virtually all upfront costs.', type:'gold', always: true },
+      { icon:'🎁', badge:'🎁 AVG $18,000', title:'DPA Programs (2,624 Active)', amount:'Average $18,000', desc:'Down payment assistance grants, forgivable loans, and deferred loans. Most buyers qualify for 5–15 programs they\'ve never heard of.', action:'💡 Visit DownPaymentResource.com and enter your zip code right now. Free to use.', type:'gold', always: true },
+      { icon:'🎖️', badge:'🎖️ VETERANS', title:'VA Loan', amount:'0% Down — No PMI', desc:'For veterans, active duty, and surviving spouses. Zero down payment, no PMI ever, competitive below-market rates.', action:'💡 If you have ANY service-connected disability, the VA funding fee is waived. Check eligibility at va.gov', type:'green', veteran: true },
+      { icon:'🌾', badge:'🌾 RURAL', title:'USDA Rural Loan', amount:'0% Down', desc:'Zero down payment in USDA-eligible areas. More suburban neighborhoods qualify than you think — not just rural.', action:'💡 Check eligibility at eligibility.sc.egov.usda.gov. Many areas just outside major cities qualify.', type:'green', always: true },
+      { icon:'🏫', badge:'🏫 PROFESSIONALS', title:'Good Neighbor Next Door (HUD)', amount:'50% Off List Price', desc:'Teachers, firefighters, EMTs, and law enforcement can buy HUD-foreclosed homes at 50% off list price.', action:'💡 Check hudhomestore.com for available properties in your area. Incredibly underused program.', type:'blue', teacher: true },
+      { icon:'📊', badge:'💰 TAX CREDIT', title:'Mortgage Credit Certificate (MCC)', amount:'Up to $2,000/yr', desc:'Annual federal tax credit of 20–40% of your mortgage interest, every year for the life of your loan. Cumulative value: $40,000+.', action:'💡 Ask your lender or state housing agency. Must be obtained before closing — can\'t claim retroactively.', type:'blue', firstTime: true },
+    ]
+  };
+
+  function findGrants() {
+    const country = document.getElementById('grantCountry')?.value || 'CA';
+    const firstTime = document.getElementById('firstTimeBuyer')?.value === 'yes';
+    const employment = document.getElementById('employment')?.value || 'employed';
+    const income = parseFloat(document.getElementById('grantIncome')?.value) || 0;
+
+    const allGrants = ALL_GRANTS[country] || [];
+    const matching = allGrants.filter(g => {
+      if (g.always) return true;
+      if (g.firstTime && firstTime) return true;
+      if (g.veteran && employment === 'veteran') return true;
+      if (g.teacher && employment === 'teacher') return true;
+      return false;
+    });
+
+    const container = document.getElementById('grantsResults');
+    const empty = document.getElementById('grantsEmpty');
+
+    if (!matching.length) {
+      container.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    const typeColors = {
+      gold: 'rgba(255,215,0,0.15);color:#FFD700;border:1px solid rgba(255,215,0,0.3)',
+      green: 'rgba(34,197,94,0.12);color:#22C55E;border:1px solid rgba(34,197,94,0.25)',
+      blue: 'rgba(59,130,246,0.12);color:#60A5FA;border:1px solid rgba(59,130,246,0.25)',
+      orange: 'rgba(249,115,22,0.12);color:#FB923C;border:1px solid rgba(249,115,22,0.25)',
+    };
+
+    container.innerHTML = matching.map(g => `
+      <div class="grant-card ${g.type === 'gold' ? 'gold-grant' : ''}">
+        <div class="grant-header">
+          <span class="grant-icon">${g.icon}</span>
+          <div style="flex:1">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+              <div class="grant-title">${g.title}</div>
+              <span class="grant-badge" style="background:${typeColors[g.type]}">${g.badge}</span>
+            </div>
+            <div class="grant-amount">${g.amount}</div>
+          </div>
+        </div>
+        <div class="grant-desc">${g.desc}</div>
+        <div class="grant-action">${g.action}</div>
+      </div>
+    `).join('') + `
+      <div class="grants-total">
+        <span class="gt-label">💰 Total potential free money you may qualify for:</span>
+        <span class="gt-amount">${country === 'CA' ? '$100,000+' : '$18,000–$80,000+'}</span>
+      </div>
+    `;
+  }
+
+  // ============================================================
+  //  HIDDEN FEES LIST
+  // ============================================================
+  const FEES_DATA = [
+    { name:'Origination Fee', type:'negotiate', desc:'Lender charges for processing the loan. Typically 0.5–1% of loan. Always negotiable.', script:'Script: "Can you waive or reduce the origination fee? I\'m comparing with 4 other lenders."' },
+    { name:'Application Fee', type:'fight', desc:'A fee just to apply. Zero justification. This is a junk fee — CFPB has flagged it.', script:'Script: "I\'d like this application fee removed. It\'s not standard and I\'ll escalate to the CFPB if needed."' },
+    { name:'Rate Lock Fee', type:'negotiate', desc:'Some lenders charge to lock in your rate. Many others do this free. Negotiate or switch.', script:'Script: "Other lenders offer free rate locks. Can you match that or waive this fee?"' },
+    { name:'Underwriting Fee', type:'negotiate', desc:'Partially legitimate. The flat fee portion is standard; anything over $500 is worth challenging.', script:'Script: "Your underwriting fee is $[X] vs the industry standard of ~$400–500. Can you match?"' },
+    { name:'Document Preparation Fee', type:'fight', desc:'A junk fee for printing documents that cost pennies. Almost always negotiable or removable.', script:'Script: "Document prep is included in underwriting. Please remove this line item."' },
+    { name:'Processing Fee', type:'fight', desc:'Often double-billed with underwriting. If both appear, one is likely junk.', script:'Script: "You have both a processing fee and underwriting fee. I\'d like a breakdown of what each covers."' },
+    { name:'Appraisal Fee', type:'legit', desc:'Required by the lender. Typically $300–$600. You pay the appraiser directly. Non-negotiable.', script:'' },
+    { name:'Credit Report Fee', type:'legit', desc:'Legitimate, usually $15–$50. Required to verify your credit history.', script:'' },
+    { name:'Title Search Fee', type:'legit', desc:'Required to verify clean ownership chain. Non-negotiable.', script:'' },
+    { name:'Title Insurance', type:'negotiate', desc:'Lender\'s title insurance is required. Owner\'s title insurance is optional but recommended. Shop independently.', script:'Script: "I\'d like to shop independently for title insurance. Can you give me the title company\'s rate sheet?"' },
+    { name:'Settlement / Closing Fee', type:'negotiate', desc:'Charged by the title company or attorney. Can vary by hundreds of dollars — shop around.', script:'Script: "I\'d like to use my own closing attorney. Can you work with [alternative]?"' },
+    { name:'Survey Fee', type:'legit', desc:'Required in most jurisdictions to confirm property boundaries. Legitimate cost.', script:'' },
+    { name:'Notary Fee', type:'negotiate', desc:'Typically $50–$200. Can often be bundled or reduced if you negotiate the closing fee.', script:'Script: "Can the notary fee be included in the settlement fee rather than billed separately?"' },
+    { name:'Courier / Overnight Fee', type:'fight', desc:'A pure junk fee in the digital age. Documents are sent electronically. Request removal.', script:'Script: "All documents are transmitted electronically. Please remove the courier fee."' },
+    { name:'Tax Service Fee', type:'fight', desc:'Charged to monitor tax payments. This benefits the lender, not you. Junk fee — remove.', script:'Script: "This fee benefits the lender, not me. I\'d like it removed."' },
+    { name:'HOA Transfer / Certification Fee', type:'negotiate', desc:'If buying a condo/HOA property. Can sometimes be split with seller or reduced.', script:'Script: "Can the seller cover the HOA transfer fee as part of the negotiation?"' },
+    { name:'Prepaid Interest', type:'legit', desc:'Interest from closing date to end of month. Legitimate and non-negotiable.', script:'' },
+  ];
+
+  function buildFeesList() {
+    const container = document.getElementById('feesList');
+    container.innerHTML = FEES_DATA.map(f => `
+      <div class="fee-item ${f.type}" data-type="${f.type}">
+        <span class="fee-badge badge-${f.type}">${f.type === 'fight' ? '🥊 Fight' : f.type === 'negotiate' ? '💬 Negotiate' : '✅ Legit'}</span>
+        <div>
+          <div class="fee-name">${f.name}</div>
+          <div class="fee-desc">${f.desc}</div>
+          ${f.script ? `<div class="fee-script">${f.script}</div>` : ''}
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function filterFees(type, btn) {
+    document.querySelectorAll('.fee-filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.fee-item').forEach(item => {
+      item.style.display = (type === 'all' || item.dataset.type === type) ? 'flex' : 'none';
+    });
+  }
+
+  // ============================================================
+  //  CREDIT BOOSTER
+  // ============================================================
+  function calcCredit() {
+    const score = parseInt(document.getElementById('currentScore')?.value) || 660;
+    const loan  = parseFloat(document.getElementById('loanAmt')?.value) || 400000;
+
+    const tiers = [
+      { label: 'Poor: 580–619',      min:580, max:619, rate:7.8,  plan: ['30 Days: Pull free credit report at AnnualCreditReport.com — dispute any errors.', '60 Days: Pay down all credit cards below 30% utilization. Each card matters.', '90 Days: Become an authorized user on a family member\'s old, low-balance card.'] },
+      { label: 'Fair: 620–659',      min:620, max:659, rate:7.1,  plan: ['30 Days: Get current on any late payments — even one 30-day late drops score 60–80 points.', '60 Days: Pay all cards to below 10% utilization for maximum score boost.', '90 Days: Ask lender about rapid rescoring — can update your score in 3–5 business days.'] },
+      { label: 'Good: 660–699',      min:660, max:699, rate:6.5,  plan: ['30 Days: Check for errors on all 3 bureaus (Equifax, Experian, TransUnion). Dispute any.', '60 Days: Keep utilization under 10%. Pay off any collections under $500.', '90 Days: Do NOT open new credit. Every hard inquiry costs 5–10 points.'] },
+      { label: 'Very Good: 700–739', min:700, max:739, rate:6.0,  plan: ['30 Days: Maintain zero new inquiries. Don\'t apply for any new credit.', '60 Days: Keep oldest accounts open and active — account age counts for 15% of score.', '90 Days: Target 760+ for the absolute best rates. You\'re very close.'] },
+      { label: 'Excellent: 740+',    min:740, max:850, rate:5.75, plan: ['You\'re at the top tier! All lenders will offer you their best rates.', 'Focus: Shop 5–7 lenders to find the lowest rate among "excellent credit" offers.', 'Strategy: Consider paying 1 point upfront to buy down your rate if you\'re staying 7+ years.'] },
+    ];
+
+    const container = document.getElementById('creditResults');
+    const currentTier = tiers.find(t => score >= t.min && score <= t.max) || tiers[2];
+    const monthlyRate = r => (r / 100 / 12);
+    const calcPmt = (r, n, p) => { const mr = monthlyRate(r); return p * mr * Math.pow(1+mr, n) / (Math.pow(1+mr, n) - 1); };
+    const n = 30 * 12;
+
+    container.innerHTML = tiers.map(t => {
+      const isCurrent = t.min === currentTier.min;
+      const pmt = calcPmt(t.rate, n, loan);
+      const totalInterest = pmt * n - loan;
+      const saving = calcPmt(tiers.find(x=>x.min===580).rate, n, loan)*n - loan - totalInterest;
+      return `
+        <div class="credit-tier ${isCurrent ? 'current-tier' : ''}">
+          <div class="ct-left">
+            <h4>${t.label} ${isCurrent ? '<span style="color:#FFD700;font-size:0.75rem;margin-left:6px;">◀ YOU</span>' : ''}</h4>
+            <p>30-yr total interest: $${Math.round(totalInterest).toLocaleString()}</p>
+          </div>
+          <div>
+            <div class="ct-rate">${t.rate}% rate</div>
+            <div class="ct-savings">$${Math.round(saving/1000)}K saved vs lowest</div>
+          </div>
+        </div>`;
+    }).join('') + `
+      <div class="credit-plan">
+        <div class="cp-title">📅 Your Personal 30/60/90-Day Plan (${currentTier.label})</div>
+        ${currentTier.plan.map((step, i) => `
+          <div class="cp-step">
+            <span class="cp-day">${['Day 1–30','Day 31–60','Day 61–90'][i]}</span>
+            <p>${step}</p>
+          </div>`).join('')}
+      </div>`;
+  }
+
+  // ============================================================
+  //  RATE SAVINGS CALCULATOR
+  // ============================================================
+  function calcRateSavings() {
+    const loan  = parseFloat(document.getElementById('rateLoad')?.value) || 400000;
+    const r1    = parseFloat(document.getElementById('rate1')?.value) || 6.5;
+    const r2    = parseFloat(document.getElementById('rate2')?.value) || 5.9;
+    const years = parseInt(document.getElementById('amortYears')?.value) || 30;
+
+    const n = years * 12;
+    const calcTotal = r => { const mr = r/100/12; const pmt = loan * mr * Math.pow(1+mr,n)/(Math.pow(1+mr,n)-1); return pmt*n; };
+
+    const total1 = calcTotal(r1);
+    const total2 = calcTotal(r2);
+    const saving = total1 - total2;
+    const pmt1   = total1/n;
+    const pmt2   = total2/n;
+    const diffPmt = pmt1 - pmt2;
+
+    const fmt = n => '$' + Math.round(n).toLocaleString();
+
+    document.getElementById('rateResults').innerHTML = `
+      <div class="rate-comparison">
+        <div class="rate-col bad-rate">
+          <div class="rc-val">${r1}%</div>
+          <div class="rc-label">First Lender<br>${fmt(pmt1)}/mo</div>
+        </div>
+        <div class="rate-vs">VS</div>
+        <div class="rate-col good-rate">
+          <div class="rc-val">${r2}%</div>
+          <div class="rc-label">Best Rate Found<br>${fmt(pmt2)}/mo</div>
+        </div>
+      </div>
+      <div class="rate-savings-box">
+        <div class="rsb-label">Total savings over ${years} years by shopping lenders</div>
+        <div class="rsb-amount">${fmt(saving)}</div>
+        <div class="rsb-sub">${fmt(diffPmt)}/month less × ${n} payments = ${fmt(saving)}</div>
+      </div>
+      <div class="rate-tip">
+        <strong>✅ Credit score impact: ZERO</strong> — All mortgage inquiries made within a <strong>14–45 day window</strong> count as a single hard inquiry.
+        Shop at least 5–7 lenders. Credit unions and mortgage brokers often beat big bank rates by 0.25–0.75%.
+      </div>
+    `;
+  }
+
+  // ============================================================
+  //  WIRE UP ALL CTA BUTTONS
+  // ============================================================
+  document.addEventListener('DOMContentLoaded', () => {
+    // Intercept ALL href="#platform" clicks → open platform modal
+    document.querySelectorAll('a[href="#platform"], .btn-nav-cta, .btn-mobile-cta').forEach(el => {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        openPlatformModal('budget');
+      });
+    });
+
+    // "Get the Full Playbook" button
+    document.querySelectorAll('a[href="#negotiate"]').forEach(el => {
+      // Only the button inside negotiate-cta should open the modal
+      if (el.textContent.includes('Full Playbook')) {
+        el.addEventListener('click', e => {
+          e.preventDefault();
+          openPlaybookModal();
+        });
+      }
+    });
+
+    // "See All 10 Insider Secrets" → scroll to secrets section
+    document.querySelectorAll('a[href="#secrets"]').forEach(el => {
+      el.addEventListener('click', e => {
+        e.preventDefault();
+        closePlatformModal();
+        const target = document.querySelector('#secrets');
+        if (target) {
+          const navH = document.querySelector('.navbar')?.offsetHeight || 70;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - navH - 12, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // The big final CTA button — "Open The Platform Free"
+    const finalCTABtn = document.querySelector('.final-ctas .btn-primary');
+    if (finalCTABtn) {
+      finalCTABtn.addEventListener('click', e => {
+        e.preventDefault();
+        openPlatformModal('budget');
+      });
+    }
+
+    // Feature card links to specific tools
+    const toolMap = { 'budget': 'budget', 'grants': 'grants', 'fees': 'fees', 'credit': 'credit', 'negotiate': 'rate', 'secrets': 'secrets' };
+    document.querySelectorAll('.feature-card').forEach(card => {
+      const toolId = card.dataset.feature;
+      const link = card.querySelector('.feature-link');
+      if (link && toolMap[toolId]) {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          openPlatformModal(toolMap[toolId]);
+        });
+      }
+    });
+
+    // Escape key closes modals
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closePlatformModal();
+        closePlaybookModal();
+      }
+    });
+
+    // Init rate calculator on load
+    calcRateSavings();
+  });
+  </script>
+
 </body>
 </html>
